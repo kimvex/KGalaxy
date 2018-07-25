@@ -9,6 +9,15 @@
   "author": "Kimvex",
   "license": "ISC",
   "dependencies": {
-    "phaser-ce": "^2.11.0"
+    "p2": "^0.7.1",
+    "phaser-ce": "^2.11.0",
+    "pixi": "^0.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.2.2",
+    "catlistener": "0.0.11"
   }
 }
