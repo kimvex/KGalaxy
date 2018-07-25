@@ -18,6 +18,7 @@ class KGalaxy {
     this.game.load.spritesheet('player7', './assets/naves/27.png');
     this.game.load.spritesheet('player8', './assets/naves/7.png');
     this.game.load.image('rank', './assets/rangos/rank_19.png');
+    this.game.load.image('portal1', './assets/portales/base3n.png');
   }
 
   create() {
@@ -29,6 +30,10 @@ class KGalaxy {
     this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
+    // Portal izquierda abajo
+    this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
+    this.portal1.anchor.setTo(0.5, 0.5);
+
     this.player = this.game.add.sprite(3763.9733077084065, 3712.077713020402, 'player');
     this.player.anchor.setTo(0.5, 0.5);
     this.player.smoothed = false;
@@ -38,6 +43,7 @@ class KGalaxy {
 
     this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
     this.rank.anchor.setTo(0.5, 0.5);
+    
 
     const style = {
       font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
@@ -95,7 +101,7 @@ class KGalaxy {
       }
       this.game.physics.arcade.moveToPointer(this.player, 180);
       //console.log(game.physics.arcade)
-      //console.log(game.world, game.world.position, game.input.mousePointer.x, game.input.mousePointer.y,'----', player.position.x, player.position.y, game.input.activePointer.leftButton.isDown, game.input.activePointer.rightButton.isDown, game.input.activePointer)
+      console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
       //console.log(player.rotation)
       //player.body.moveUp(180)
       //game.physics.arcade.moveToPointer(player, 100);
