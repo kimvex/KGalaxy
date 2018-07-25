@@ -1,0 +1,14 @@
+{
+  "name": "kgalaxy",
+  "version": "0.0.1",
+  "description": "\"A Game base on Darkorbit\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kimvex",
+  "license": "ISC",
+  "dependencies": {
+    "phaser-ce": "^2.11.0"
+  }
+}
