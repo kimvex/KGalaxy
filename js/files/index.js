@@ -17,6 +17,7 @@ class KGalaxy {
     this.game.load.spritesheet('player6', './assets/naves/37.png');
     this.game.load.spritesheet('player7', './assets/naves/27.png');
     this.game.load.spritesheet('player8', './assets/naves/7.png');
+    this.game.load.spritesheet('iris1', './assets/drones/BvluCKE.png');
     this.game.load.image('rank', './assets/rangos/rank_19.png');
     this.game.load.image('portal1', './assets/portales/base3n.png');
   }
@@ -43,6 +44,9 @@ class KGalaxy {
 
     this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
     this.rank.anchor.setTo(0.5, 0.5);
+
+    this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 180), Math.floor((this.player.y + this.player.height) - 55), 'iris1');
+    this.iris1.anchor.setTo(0.5, 0.5);
     
 
     const style = {
@@ -73,6 +77,7 @@ class KGalaxy {
 
       this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
       this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
+
       console.log(this.game.physics.arcade.angleToPointer(this.player))
       if (this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9) {
         // Arriba
@@ -96,6 +101,8 @@ class KGalaxy {
         // Izquierda arriba
         this.player.loadTexture('player8', 100, false);
       } else if (this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1) {
+        this.iris1.x = Math.floor(this.player.x + this.player.width / 7 - 180);
+        this.iris1.y = Math.floor((this.player.y + this.player.height) - 55);
         // Derecha
         this.player.loadTexture('player', 0, false);
       }
