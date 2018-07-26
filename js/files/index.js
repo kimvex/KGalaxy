@@ -2,6 +2,9 @@ window.PIXI = require('phaser-ce/build/custom/pixi');
 window.p2 = require('phaser-ce/build/custom/p2');
 window.Phaser = require('phaser-ce/build/custom/phaser-split');
 
+import Nave from './nave'
+import Drones from './drones'
+
 class KGalaxy {  
   init(game) {
     this.game = game;
@@ -35,27 +38,25 @@ class KGalaxy {
     this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
     this.portal1.anchor.setTo(0.5, 0.5);
 
-    this.player = this.game.add.sprite(3763.9733077084065, 3712.077713020402, 'player');
-    this.player.anchor.setTo(0.5, 0.5);
-    this.player.smoothed = false;
-    this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+    this.ship = new Nave()
+    this.ship.shipConstruction(this, Phaser)
+    console.log(this.ship.player, 'whats?')
 
-    this.player.body.fixedRotation = true;
+    const player = this.ship.player
+    
+    this.drones = new Drones()
+    this.drones.createDrone(this, this.ship.player)
 
-    this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
+    this.rank = this.game.add.sprite(Math.floor(player.x + player.width / 7 - 63), Math.floor(player.y + player.height / 1.3), 'rank');
     this.rank.anchor.setTo(0.5, 0.5);
 
-    this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 180), Math.floor((this.player.y + this.player.height) - 55), 'iris1');
-    this.iris1.anchor.setTo(0.5, 0.5);
-    
-
     const style = {
-      font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
+      font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
       marginRight: 'auto',
       display: 'block'
     };
 
-    this.text = this.game.add.text(Math.floor(this.player.x + this.player.width / 7 - 50), Math.floor(this.player.y + this.player.height / 1.5), "- Buraky -", style);
+    this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
 
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -63,13 +64,14 @@ class KGalaxy {
     //  it's all just set by the camera follow type.
     //  0.1 is the amount of linear interpolation to use.
     //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
-    this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
-
+    this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
+    
   }
 
   update() {
 
     //this.player.body.setZeroVelocity();
+    this.player = this.ship.player
     if (this.game.input.activePointer.isDown) {
       //this.player.body.moveRight(180);
       this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
@@ -78,34 +80,8 @@ class KGalaxy {
       this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
       this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
 
-      console.log(this.game.physics.arcade.angleToPointer(this.player))
-      if (this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9) {
-        // Arriba
-        this.player.loadTexture('player2', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2) {
-        // Abajo
-        this.player.loadTexture('player3', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4) {
-        // Izquierda
-        this.player.loadTexture('player4', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3) {
-        // Izquierda abajo
-        this.player.loadTexture('player5', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1) {
-        // Derecha abajo
-        this.player.loadTexture('player6', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1) {
-        // Derecha arriba
-        this.player.loadTexture('player7', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3) {
-        // Izquierda arriba
-        this.player.loadTexture('player8', 100, false);
-      } else if (this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1) {
-        this.iris1.x = Math.floor(this.player.x + this.player.width / 7 - 180);
-        this.iris1.y = Math.floor((this.player.y + this.player.height) - 55);
-        // Derecha
-        this.player.loadTexture('player', 0, false);
-      }
+      this.ship.playerMove(this.drones)
+      this.drones.moveDrones()
       this.game.physics.arcade.moveToPointer(this.player, 180);
       //console.log(game.physics.arcade)
       console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
