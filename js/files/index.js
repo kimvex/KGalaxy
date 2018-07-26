@@ -47,7 +47,7 @@ class KGalaxy {
 
     this.ship = new Nave()
     this.ship.shipConstruction(this, Phaser)
-    console.log(this.ship.player, 'whats?')
+    //console.log(this.ship.player, 'whats?')
 
     const player = this.ship.player
     
@@ -91,7 +91,7 @@ class KGalaxy {
       this.drones.moveDrones()
       this.game.physics.arcade.moveToPointer(this.player, 180);
       //console.log(game.physics.arcade)
-      console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
+      //console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
       //console.log(player.rotation)
       //player.body.moveUp(180)
       //game.physics.arcade.moveToPointer(player, 100);
