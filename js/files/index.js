@@ -21,6 +21,7 @@ class KGalaxy {
     this.game.load.spritesheet('player7', './assets/naves/27.png');
     this.game.load.spritesheet('player8', './assets/naves/7.png');
     this.game.load.spritesheet('iris1', './assets/drones/BvluCKE.png');
+    this.game.load.spritesheet('iris2', './assets/drones/XwsHV70.png');
     this.game.load.image('rank', './assets/rangos/rank_19.png');
     this.game.load.image('portal1', './assets/portales/base3n.png');
   }
