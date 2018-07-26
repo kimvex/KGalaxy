@@ -1,7 +1,147 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Drones = function () {
+  function Drones() {
+    _classCallCheck(this, Drones);
+  }
+
+  _createClass(Drones, [{
+    key: 'createDrone',
+    value: function createDrone(config, player) {
+      this.player = player;
+      this.game = config.game;
+
+      //Abajo Atras
+      this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 40), 'iris1');
+      this.iris1.anchor.setTo(0.5, 0.5);
+
+      // Arriba Atras
+      this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 140), 'iris1');
+      this.iris2.anchor.setTo(0.5, 0.5);
+
+      // Atras Izquierda
+      this.iris3 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 210), Math.floor(this.player.y + this.player.height - 90), 'iris1');
+      this.iris3.anchor.setTo(0.5, 0.5);
+
+      // Atras Derecha
+      this.iris4 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 120), Math.floor(this.player.y + this.player.height - 90), 'iris1');
+      this.iris4.anchor.setTo(0.5, 0.5);
+
+      // Arriba Arriba
+      this.iris5 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 230), 'iris1');
+      this.iris5.anchor.setTo(0.5, 0.5);
+
+      // Arriba Abajo
+      this.iris6 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 170), 'iris1');
+      this.iris6.anchor.setTo(0.5, 0.5);
+
+      // Abajo Arriba
+      this.iris7 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -85), 'iris1');
+      this.iris7.anchor.setTo(0.5, 0.5);
+
+      // Abajo Abajo
+      this.iris8 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -20), 'iris1');
+      this.iris8.anchor.setTo(0.5, 0.5);
+    }
+  }, {
+    key: 'moveDrones',
+    value: function moveDrones() {
+      console.log('whats logs?', this.game.physics.arcade.angleToPointer(this.player));
+      switch (true) {
+        case this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9:
+          this.player.loadTexture('player2', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2:
+          this.player.loadTexture('player3', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4:
+          this.player.loadTexture('player4', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3:
+          this.player.loadTexture('player5', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+          this.player.loadTexture('player6', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1:
+          this.player.loadTexture('player7', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3:
+          this.player.loadTexture('player8', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+          // Derecha
+          console.log('logs and more logs');
+          //Abajo Atras
+          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+          // Arriba Atras
+          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
+
+          // Atras Izquierda
+          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 210);
+          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+          // Atras Derecha
+          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
+          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+          // Arriba Arriba
+          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+          // Arriba Abajo
+          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+          // Abajo Arriba
+          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
+
+          // Abajo Abajo
+          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+          this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
+
+          break;
+      }
+    }
+  }, {
+    key: 'drone',
+    value: function drone() {
+      return this.iris1;
+    }
+  }]);
+
+  return Drones;
+}();
+
+exports.default = Drones;
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _nave = require('./nave');
+
+var _nave2 = _interopRequireDefault(_nave);
+
+var _drones = require('./drones');
+
+var _drones2 = _interopRequireDefault(_drones);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -50,26 +190,25 @@ var KGalaxy = function () {
       this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
       this.portal1.anchor.setTo(0.5, 0.5);
 
-      this.player = this.game.add.sprite(3763.9733077084065, 3712.077713020402, 'player');
-      this.player.anchor.setTo(0.5, 0.5);
-      this.player.smoothed = false;
-      this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+      this.ship = new _nave2.default();
+      this.ship.shipConstruction(this, Phaser);
+      console.log(this.ship.player, 'whats?');
 
-      this.player.body.fixedRotation = true;
+      var player = this.ship.player;
 
-      this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
+      this.drones = new _drones2.default();
+      this.drones.createDrone(this, this.ship.player);
+
+      this.rank = this.game.add.sprite(Math.floor(player.x + player.width / 7 - 63), Math.floor(player.y + player.height / 1.3), 'rank');
       this.rank.anchor.setTo(0.5, 0.5);
 
-      this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 180), Math.floor(this.player.y + this.player.height - 55), 'iris1');
-      this.iris1.anchor.setTo(0.5, 0.5);
-
       var style = {
-        font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
+        font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
         marginRight: 'auto',
         display: 'block'
       };
 
-      this.text = this.game.add.text(Math.floor(this.player.x + this.player.width / 7 - 50), Math.floor(this.player.y + this.player.height / 1.5), "- Buraky -", style);
+      this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
 
       this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -77,13 +216,14 @@ var KGalaxy = function () {
       //  it's all just set by the camera follow type.
       //  0.1 is the amount of linear interpolation to use.
       //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
-      this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
+      this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
     }
   }, {
     key: 'update',
     value: function update() {
 
       //this.player.body.setZeroVelocity();
+      this.player = this.ship.player;
       if (this.game.input.activePointer.isDown) {
         //this.player.body.moveRight(180);
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
@@ -92,34 +232,8 @@ var KGalaxy = function () {
         this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
         this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
 
-        console.log(this.game.physics.arcade.angleToPointer(this.player));
-        if (this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9) {
-          // Arriba
-          this.player.loadTexture('player2', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2) {
-          // Abajo
-          this.player.loadTexture('player3', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4) {
-          // Izquierda
-          this.player.loadTexture('player4', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3) {
-          // Izquierda abajo
-          this.player.loadTexture('player5', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1) {
-          // Derecha abajo
-          this.player.loadTexture('player6', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1) {
-          // Derecha arriba
-          this.player.loadTexture('player7', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3) {
-          // Izquierda arriba
-          this.player.loadTexture('player8', 100, false);
-        } else if (this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1) {
-          this.iris1.x = Math.floor(this.player.x + this.player.width / 7 - 180);
-          this.iris1.y = Math.floor(this.player.y + this.player.height - 55);
-          // Derecha
-          this.player.loadTexture('player', 0, false);
-        }
+        this.ship.playerMove(this.drones);
+        this.drones.moveDrones();
         this.game.physics.arcade.moveToPointer(this.player, 180);
         //console.log(game.physics.arcade)
         console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y, '----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer);
@@ -168,7 +282,81 @@ var Game = new Phaser.Game(document.body.clientWidth, 800, Phaser.CANVAS, 'canva
 
 Kg.init(Game);
 
-},{"phaser-ce/build/custom/p2":2,"phaser-ce/build/custom/phaser-split":3,"phaser-ce/build/custom/pixi":4}],2:[function(require,module,exports){
+},{"./drones":1,"./nave":3,"phaser-ce/build/custom/p2":4,"phaser-ce/build/custom/phaser-split":5,"phaser-ce/build/custom/pixi":6}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Nave = function () {
+  function Nave() {
+    _classCallCheck(this, Nave);
+  }
+
+  _createClass(Nave, [{
+    key: 'shipConstruction',
+    value: function shipConstruction(config, Phaser) {
+      this.game = config.game;
+      this.Phaser = Phaser;
+      this.player = this.game.add.sprite(3763.9733077084065, 3712.077713020402, 'player');
+      this.player.anchor.setTo(0.5, 0.5);
+      this.player.smoothed = false;
+      this.game.physics.enable(this.player, this.Phaser.Physics.ARCADE);
+
+      this.player.body.fixedRotation = true;
+    }
+  }, {
+    key: 'playerMove',
+    value: function playerMove(drones) {
+      switch (true) {
+        case this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9:
+          this.player.loadTexture('player2', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2:
+          this.player.loadTexture('player3', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4:
+          this.player.loadTexture('player4', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3:
+          this.player.loadTexture('player5', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+          this.player.loadTexture('player6', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1:
+          this.player.loadTexture('player7', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3:
+          this.player.loadTexture('player8', 100, false);
+          break;
+        case this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+          console.log(this.player.world.x, 'this player');
+          //drones.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 180);
+          //drones.iris1.y = Math.floor((this.player.world.y + this.player.height) - 55);
+          // Derecha
+          this.player.loadTexture('player', 0, false);
+          break;
+      }
+    }
+  }, {
+    key: 'player',
+    value: function player() {
+      return this.player;
+    }
+  }]);
+
+  return Nave;
+}();
+
+exports.default = Nave;
+
+},{}],4:[function(require,module,exports){
 (function (global){
 /**
  * The MIT License (MIT)
@@ -14999,7 +15187,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function (process){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
@@ -105367,7 +105555,7 @@ PIXI.canUseNewCanvasBlendModes = function ()
 */
 
 }).call(this,require('_process'))
-},{"_process":5}],4:[function(require,module,exports){
+},{"_process":7}],6:[function(require,module,exports){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
 * @copyright    2016 Photon Storm Ltd.
@@ -113167,7 +113355,7 @@ PIXI.TextureUvs = function ()
 
     return PIXI;
 }).call(this);
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -113353,4 +113541,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[1]);
+},{}]},{},[2]);
