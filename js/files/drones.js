@@ -296,43 +296,43 @@ class Drones {
       // Izquierda arriba
         //Abajo Atras
         this.iris1.loadTexture('iris7', 100, false);
-        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-        this.iris1.y = Math.floor((this.player.world.y + this.player.height) - 40);
+        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -100);
+        this.iris1.y = Math.floor((this.player.world.y + this.player.height) - -20);
 
         // Arriba Atras
         this.iris2.loadTexture('iris7', 100, false);
-        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-        this.iris2.y = Math.floor((this.player.world.y + this.player.height) - 140);
+        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -120);
+        this.iris2.y = Math.floor((this.player.world.y + this.player.height) -80);
 
         // Atras Izquierda
         this.iris3.loadTexture('iris7', 100, false);
-        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -180);
-        this.iris3.y = Math.floor((this.player.world.y + this.player.height) - 90);
+        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -150);
+        this.iris3.y = Math.floor((this.player.world.y + this.player.height) - 20);
 
         // Atras Derecha
         this.iris4.loadTexture('iris7', 100, false);
-        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
-        this.iris4.y = Math.floor((this.player.world.y + this.player.height) - 90);
+        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -60);
+        this.iris4.y = Math.floor((this.player.world.y + this.player.height) - 40);
 
         // Arriba Arriba
         this.iris5.loadTexture('iris7', 100, false);
-        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-        this.iris5.y = Math.floor((this.player.world.y + this.player.height) - 230);
+        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - -80);
+        this.iris5.y = Math.floor((this.player.world.y + this.player.height) - 210);
 
         // Arriba Abajo
         this.iris6.loadTexture('iris7', 100, false);
-        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-        this.iris6.y = Math.floor((this.player.world.y + this.player.height) - 170);
+        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - -50);
+        this.iris6.y = Math.floor((this.player.world.y + this.player.height) - 150);
 
         // Abajo Arriba
         this.iris7.loadTexture('iris7', 100, false);
-        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-        this.iris7.y = Math.floor((this.player.world.y + this.player.height) - -85);
+        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
+        this.iris7.y = Math.floor((this.player.world.y + this.player.height) - -70);
 
         // Abajo Abajo
         this.iris8.loadTexture('iris7', 100, false);
-        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-        this.iris8.y = Math.floor((this.player.world.y + this.player.height) - -20);
+        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 50);
+        this.iris8.y = Math.floor((this.player.world.y + this.player.height) - -10);
         break;
       case this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1:
       // Derecha
