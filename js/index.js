@@ -673,6 +673,9 @@ var Nave = function () {
           // Derecha
           this.player.loadTexture('player', 0, false);
           break;
+        default:
+          // Izquierda
+          this.player.loadTexture('player4', 100, false);
       }
     }
   }, {
