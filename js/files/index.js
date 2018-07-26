@@ -17,13 +17,14 @@ class KGalaxy {
     this.game.load.spritesheet('player3', './assets/naves/49.png');
     this.game.load.spritesheet('player4', './assets/naves/1.png');
     this.game.load.spritesheet('player5', './assets/naves/59.png');
-    this.game.load.spritesheet('player6', './assets/naves/37.png');
+    this.game.load.spritesheet('player6', './assets/naves/39.png');
     this.game.load.spritesheet('player7', './assets/naves/27.png');
     this.game.load.spritesheet('player8', './assets/naves/7.png');
     this.game.load.spritesheet('iris1', './assets/drones/BvluCKE.png');
     this.game.load.spritesheet('iris2', './assets/drones/XwsHV70.png');
     this.game.load.spritesheet('iris3', './assets/drones/yDoPK8c.png');
     this.game.load.spritesheet('iris4', './assets/drones/RaKyUVE.png');
+    this.game.load.spritesheet('iris5', './assets/drones/Qv9xsEi.png');
     this.game.load.image('rank', './assets/rangos/rank_19.png');
     this.game.load.image('portal1', './assets/portales/base3n.png');
   }

@@ -20,36 +20,63 @@ var Drones = function () {
       this.player = player;
       this.game = config.game;
 
+      /*
       //Abajo Atras
-      this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 40), 'iris1');
+      this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor((this.player.y + this.player.height) - 40), 'iris1');
+      this.iris1.anchor.setTo(0.5, 0.5);
+       // Arriba Atras
+      this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor((this.player.y + this.player.height) - 140), 'iris1');
+      this.iris2.anchor.setTo(0.5, 0.5);
+       // Atras Izquierda
+      this.iris3 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 210), Math.floor((this.player.y + this.player.height) - 90), 'iris1');
+      this.iris3.anchor.setTo(0.5, 0.5);
+       // Atras Derecha
+      this.iris4 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 120), Math.floor((this.player.y + this.player.height) - 90), 'iris1');
+      this.iris4.anchor.setTo(0.5, 0.5);
+       // Arriba Arriba
+      this.iris5 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor((this.player.y + this.player.height) - 230), 'iris1');
+      this.iris5.anchor.setTo(0.5, 0.5);
+       // Arriba Abajo
+      this.iris6 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor((this.player.y + this.player.height) - 170), 'iris1');
+      this.iris6.anchor.setTo(0.5, 0.5);
+       // Abajo Arriba
+      this.iris7 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor((this.player.y + this.player.height) - -85), 'iris1');
+      this.iris7.anchor.setTo(0.5, 0.5);
+       // Abajo Abajo
+      this.iris8 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor((this.player.y + this.player.height) - -20), 'iris1');
+      this.iris8.anchor.setTo(0.5, 0.5);
+      */
+
+      //Abajo Atras
+      this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 40), 'iris5');
       this.iris1.anchor.setTo(0.5, 0.5);
 
       // Arriba Atras
-      this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 140), 'iris1');
+      this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 140), 'iris5');
       this.iris2.anchor.setTo(0.5, 0.5);
 
       // Atras Izquierda
-      this.iris3 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 210), Math.floor(this.player.y + this.player.height - 90), 'iris1');
+      this.iris3 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 210), Math.floor(this.player.y + this.player.height - 90), 'iris5');
       this.iris3.anchor.setTo(0.5, 0.5);
 
       // Atras Derecha
-      this.iris4 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 120), Math.floor(this.player.y + this.player.height - 90), 'iris1');
+      this.iris4 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 120), Math.floor(this.player.y + this.player.height - 90), 'iris5');
       this.iris4.anchor.setTo(0.5, 0.5);
 
       // Arriba Arriba
-      this.iris5 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 230), 'iris1');
+      this.iris5 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 230), 'iris5');
       this.iris5.anchor.setTo(0.5, 0.5);
 
       // Arriba Abajo
-      this.iris6 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 170), 'iris1');
+      this.iris6 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 170), 'iris5');
       this.iris6.anchor.setTo(0.5, 0.5);
 
       // Abajo Arriba
-      this.iris7 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -85), 'iris1');
+      this.iris7 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -85), 'iris5');
       this.iris7.anchor.setTo(0.5, 0.5);
 
       // Abajo Abajo
-      this.iris8 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -20), 'iris1');
+      this.iris8 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -20), 'iris5');
       this.iris8.anchor.setTo(0.5, 0.5);
     }
   }, {
@@ -144,22 +171,22 @@ var Drones = function () {
           // Izquierda
           //Abajo Atras
           this.iris1.loadTexture('iris2', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -150);
+          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
           this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
 
           // Arriba Atras
           this.iris2.loadTexture('iris2', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -150);
+          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
           this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
 
           // Atras Izquierda
           this.iris3.loadTexture('iris2', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -210);
+          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -180);
           this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
 
           // Atras Derecha
           this.iris4.loadTexture('iris2', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -120);
+          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
           this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
 
           // Arriba Arriba
@@ -188,7 +215,45 @@ var Drones = function () {
           break;
         case this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1:
           // Derecha Abajo
-          this.player.loadTexture('player6', 100, false);
+          //Abajo Atras
+          this.iris1.loadTexture('iris5', 100, false);
+          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
+          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+          // Arriba Atras
+          this.iris2.loadTexture('iris5', 100, false);
+          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 100);
+          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
+
+          // Atras Izquierda
+          this.iris3.loadTexture('iris5', 100, false);
+          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
+          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 210);
+
+          // Atras Derecha
+          this.iris4.loadTexture('iris5', 100, false);
+          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 110);
+          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 160);
+
+          // Arriba Arriba
+          this.iris5.loadTexture('iris5', 100, false);
+          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - -60);
+          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+          // Arriba Abajo
+          this.iris6.loadTexture('iris5', 100, false);
+          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - -20);
+          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+          // Abajo Arriba
+          this.iris7.loadTexture('iris5', 100, false);
+          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -10);
+
+          // Abajo Abajo
+          this.iris8.loadTexture('iris5', 100, false);
+          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 80);
+          this.iris8.y = Math.floor(this.player.world.y + this.player.height - 50);
           break;
         case this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1:
           // Derecha Arriba
@@ -296,13 +361,14 @@ var KGalaxy = function () {
       this.game.load.spritesheet('player3', './assets/naves/49.png');
       this.game.load.spritesheet('player4', './assets/naves/1.png');
       this.game.load.spritesheet('player5', './assets/naves/59.png');
-      this.game.load.spritesheet('player6', './assets/naves/37.png');
+      this.game.load.spritesheet('player6', './assets/naves/39.png');
       this.game.load.spritesheet('player7', './assets/naves/27.png');
       this.game.load.spritesheet('player8', './assets/naves/7.png');
       this.game.load.spritesheet('iris1', './assets/drones/BvluCKE.png');
       this.game.load.spritesheet('iris2', './assets/drones/XwsHV70.png');
       this.game.load.spritesheet('iris3', './assets/drones/yDoPK8c.png');
       this.game.load.spritesheet('iris4', './assets/drones/RaKyUVE.png');
+      this.game.load.spritesheet('iris5', './assets/drones/Qv9xsEi.png');
       this.game.load.image('rank', './assets/rangos/rank_19.png');
       this.game.load.image('portal1', './assets/portales/base3n.png');
     }
