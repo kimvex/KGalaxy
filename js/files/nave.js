@@ -45,7 +45,7 @@ class Nave {
         this.player.loadTexture('player', 0, false);
         break;
       default:
-              // Izquierda
+        // Izquierda
         this.player.loadTexture('player4', 100, false);
     }
   }

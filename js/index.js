@@ -2,7 +2,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+        value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10,440 +10,461 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Drones = function () {
-  function Drones() {
-    _classCallCheck(this, Drones);
-  }
-
-  _createClass(Drones, [{
-    key: 'createDrone',
-    value: function createDrone(config, player) {
-      this.player = player;
-      this.game = config.game;
-
-      //Abajo Atras
-      this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 40), 'iris1');
-      this.iris1.anchor.setTo(0.5, 0.5);
-
-      // Arriba Atras
-      this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 140), 'iris1');
-      this.iris2.anchor.setTo(0.5, 0.5);
-
-      // Atras Izquierda
-      this.iris3 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 210), Math.floor(this.player.y + this.player.height - 90), 'iris1');
-      this.iris3.anchor.setTo(0.5, 0.5);
-
-      // Atras Derecha
-      this.iris4 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 120), Math.floor(this.player.y + this.player.height - 90), 'iris1');
-      this.iris4.anchor.setTo(0.5, 0.5);
-
-      // Arriba Arriba
-      this.iris5 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 230), 'iris1');
-      this.iris5.anchor.setTo(0.5, 0.5);
-
-      // Arriba Abajo
-      this.iris6 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 170), 'iris1');
-      this.iris6.anchor.setTo(0.5, 0.5);
-
-      // Abajo Arriba
-      this.iris7 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -85), 'iris1');
-      this.iris7.anchor.setTo(0.5, 0.5);
-
-      // Abajo Abajo
-      this.iris8 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -20), 'iris1');
-      this.iris8.anchor.setTo(0.5, 0.5);
-    }
-  }, {
-    key: 'moveDrones',
-    value: function moveDrones() {
-      switch (true) {
-        case this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9:
-          // Arriba
-          //Arriba Izquierda
-          this.iris1.loadTexture('iris4', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 60);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - -40);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris4', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - -40);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris4', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 200);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris4', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris4', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris4', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - -80);
-
-          // Derecha Arriba
-          this.iris7.loadTexture('iris4', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -170);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Derecha Abajo
-          this.iris8.loadTexture('iris4', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - 120);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2:
-          // Abajo
-          //Arriba Izquierda
-          this.iris1.loadTexture('iris3', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 60);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 240);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris3', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris3', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 200);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris3', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris3', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 280);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris3', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 200);
-
-          // Derecha Arriba
-          this.iris7.loadTexture('iris3', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -170);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Derecha Abajo
-          this.iris8.loadTexture('iris3', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - 120);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4:
-          // Izquierda
-          //Abajo Atras
-          this.iris1.loadTexture('iris2', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris2', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris2', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -180);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris2', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris2', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris2', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris2', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris2', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3:
-          // Izquierda Abajo
-          //Abajo Atras
-          this.iris1.loadTexture('iris8', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 230);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris8', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -110);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris8', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 160);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris8', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -70);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 170);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris8', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris8', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 50);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 160);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris8', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -100);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -25);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris8', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - 40);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1:
-          // Derecha Abajo
-          //Abajo Atras
-          this.iris1.loadTexture('iris5', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 120);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris5', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 100);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris5', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 210);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris5', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 110);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 160);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris5', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - -60);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris5', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - -20);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris5', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -10);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris5', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 80);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - 50);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1:
-          // Derecha Arriba
-          //Abajo Atras
-          this.iris1.loadTexture('iris6', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 160);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - -40);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris6', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 100);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 40);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris6', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 30);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris6', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 70);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - -50);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris6', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 140);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 200);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris6', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 150);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris6', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -110);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -20);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris6', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -50);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - 30);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3:
-          // Izquierda arriba
-          //Abajo Atras
-          this.iris1.loadTexture('iris7', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -100);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - -20);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris7', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -120);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 80);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris7', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -150);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 20);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris7', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -60);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 40);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris7', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - -80);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 210);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris7', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - -50);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 150);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris7', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -70);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris7', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 50);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - -10);
-          break;
-        case this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1:
-          // Derecha
-          console.log('logs and more logs');
-          //Abajo Atras
-          this.iris1.loadTexture('iris1', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris1', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris1', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 210);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris1', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris1', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris1', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris1', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris1', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
-          break;
-        default:
-          // Izquierda
-          //Abajo Atras
-          this.iris1.loadTexture('iris2', 100, false);
-          this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-          this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
-
-          // Arriba Atras
-          this.iris2.loadTexture('iris2', 100, false);
-          this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
-          this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
-
-          // Atras Izquierda
-          this.iris3.loadTexture('iris2', 100, false);
-          this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -180);
-          this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
-
-          // Atras Derecha
-          this.iris4.loadTexture('iris2', 100, false);
-          this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
-          this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
-
-          // Arriba Arriba
-          this.iris5.loadTexture('iris2', 100, false);
-          this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
-
-          // Arriba Abajo
-          this.iris6.loadTexture('iris2', 100, false);
-          this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
-
-          // Abajo Arriba
-          this.iris7.loadTexture('iris2', 100, false);
-          this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
-
-          // Abajo Abajo
-          this.iris8.loadTexture('iris2', 100, false);
-          this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
-          this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
-      }
-    }
-  }, {
-    key: 'drone',
-    value: function drone() {
-      return this.iris1;
-    }
-  }]);
-
-  return Drones;
+        function Drones() {
+                _classCallCheck(this, Drones);
+        }
+
+        _createClass(Drones, [{
+                key: 'createDrone',
+                value: function createDrone(config, player, Phaser) {
+                        this.player = player;
+                        this.game = config.game;
+
+                        //Abajo Atras
+                        this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 40), 'iris1');
+                        this.iris1.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris1, Phaser.Physics.ARCADE);
+
+                        // Arriba Atras
+                        this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 140), 'iris1');
+                        this.iris2.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris2, Phaser.Physics.ARCADE);
+
+                        // Atras Izquierda
+                        this.iris3 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 210), Math.floor(this.player.y + this.player.height - 90), 'iris1');
+                        this.iris3.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris3, Phaser.Physics.ARCADE);
+
+                        // Atras Derecha
+                        this.iris4 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 120), Math.floor(this.player.y + this.player.height - 90), 'iris1');
+                        this.iris4.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris4, Phaser.Physics.ARCADE);
+
+                        // Arriba Arriba
+                        this.iris5 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 230), 'iris1');
+                        this.iris5.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris5, Phaser.Physics.ARCADE);
+
+                        // Arriba Abajo
+                        this.iris6 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - 170), 'iris1');
+                        this.iris6.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris6, Phaser.Physics.ARCADE);
+
+                        // Abajo Arriba
+                        this.iris7 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -85), 'iris1');
+                        this.iris7.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris7, Phaser.Physics.ARCADE);
+
+                        // Abajo Abajo
+                        this.iris8 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 10), Math.floor(this.player.y + this.player.height - -20), 'iris1');
+                        this.iris8.anchor.setTo(0.5, 0.5);
+                        this.game.physics.enable(this.iris8, Phaser.Physics.ARCADE);
+                }
+        }, {
+                key: 'moveDrones',
+                value: function moveDrones(angle) {
+                        switch (true) {
+                                case angle < -1 && angle > -1.9:
+                                        // Arriba
+                                        //Arriba Izquierda
+                                        this.iris1.loadTexture('iris4', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 60);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - -40);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris4', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - -40);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris4', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 200);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris4', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris4', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris4', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - -80);
+
+                                        // Derecha Arriba
+                                        this.iris7.loadTexture('iris4', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -170);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Derecha Abajo
+                                        this.iris8.loadTexture('iris4', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - 120);
+                                        break;
+                                case angle > 1 && angle < 2:
+                                        // Abajo
+                                        //Arriba Izquierda
+                                        this.iris1.loadTexture('iris3', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 60);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 240);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris3', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris3', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 200);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris3', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris3', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 280);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris3', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 200);
+
+                                        // Derecha Arriba
+                                        this.iris7.loadTexture('iris3', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -170);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Derecha Abajo
+                                        this.iris8.loadTexture('iris3', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - 120);
+                                        break;
+                                case angle < -3 && angle > -4:
+                                        // Izquierda
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris2', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris2', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris2', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -180);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris2', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris2', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris2', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris2', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris2', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
+                                        break;
+                                case angle > 2 && angle < 3:
+                                        // Izquierda Abajo
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris8', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris8', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -110);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris8', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 160);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris8', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -70);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris8', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris8', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 50);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 160);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris8', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -100);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -25);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris8', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -40);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - 40);
+                                        break;
+                                case angle > 0 && angle < 1:
+                                        // Derecha Abajo
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris5', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 120);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris5', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 100);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 240);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris5', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 210);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris5', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 110);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 160);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris5', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - -60);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris5', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - -20);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris5', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -10);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris5', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 80);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - 50);
+                                        break;
+                                case angle < -0.5 && angle > -1:
+                                        // Derecha Arriba
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris6', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 160);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - -40);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris6', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 100);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris6', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 190);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 30);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris6', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 70);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - -50);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris6', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 140);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 200);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris6', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 150);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris6', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - -110);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -20);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris6', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - -50);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - 30);
+                                        break;
+                                case angle < -2 && angle > -3:
+                                        // Izquierda arriba
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris7', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -100);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - -20);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris7', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -120);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 80);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris7', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -150);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 20);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris7', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -60);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris7', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - -80);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 210);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris7', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - -50);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 150);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris7', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 90);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -70);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris7', 100, false);
+                                        //this.game.physics.arcade.moveToXY(this.iris8, x, y, 180 )
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 50);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - -10);
+                                        break;
+                                case angle > -0.5 && angle < 1:
+                                        // Derecha
+                                        console.log('logs and more logs');
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris1', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris1', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris1', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 210);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris1', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris1', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris1', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris1', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris1', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
+                                        break;
+                                default:
+                                        // Izquierda
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris2', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris2', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - -140);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris2', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - -180);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris2', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - -90);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris2', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris2', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris2', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris2', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
+                        }
+                }
+        }, {
+                key: 'drone',
+                value: function drone() {
+                        return this.iris1;
+                }
+        }, {
+                key: 'stop',
+                value: function stop() {
+                        this.iris1.body.velocity.setTo(0, 0);
+                        this.iris2.body.velocity.setTo(0, 0);
+                        this.iris3.body.velocity.setTo(0, 0);
+                        this.iris4.body.velocity.setTo(0, 0);
+                        this.iris5.body.velocity.setTo(0, 0);
+                        this.iris6.body.velocity.setTo(0, 0);
+                        this.iris7.body.velocity.setTo(0, 0);
+                        this.iris8.body.velocity.setTo(0, 0);
+                }
+        }]);
+
+        return Drones;
 }();
 
 exports.default = Drones;
@@ -452,6 +473,10 @@ exports.default = Drones;
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _phaserMoveAndStopPlugin = require('phaser-move-and-stop-plugin');
+
+var _phaserMoveAndStopPlugin2 = _interopRequireDefault(_phaserMoveAndStopPlugin);
 
 var _nave = require('./nave');
 
@@ -468,6 +493,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 window.PIXI = require('phaser-ce/build/custom/pixi');
 window.p2 = require('phaser-ce/build/custom/p2');
 window.Phaser = require('phaser-ce/build/custom/phaser-split');
+
+//const Phaser = window.Phaser
 
 var KGalaxy = function () {
   function KGalaxy() {
@@ -524,10 +551,11 @@ var KGalaxy = function () {
       var player = this.ship.player;
 
       this.drones = new _drones2.default();
-      this.drones.createDrone(this, this.ship.player);
+      this.drones.createDrone(this, this.ship.player, Phaser);
 
       this.rank = this.game.add.sprite(Math.floor(player.x + player.width / 7 - 63), Math.floor(player.y + player.height / 1.3), 'rank');
       this.rank.anchor.setTo(0.5, 0.5);
+      this.game.physics.enable(this.rank, Phaser.Physics.ARCADE);
 
       var style = {
         font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
@@ -544,6 +572,10 @@ var KGalaxy = function () {
       //  0.1 is the amount of linear interpolation to use.
       //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
       this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
+      //this.game.moveAndStop = this.game.plugins.add(MoveAndStopPlugin);
+      this.x;
+      this.y;
+      this.angle;
     }
   }, {
     key: 'update',
@@ -558,17 +590,46 @@ var KGalaxy = function () {
 
         this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
         this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
+        this.x = this.game.input.activePointer.worldX;
+        this.y = this.game.input.activePointer.worldY;
 
         this.ship.playerMove(this.drones);
-        this.drones.moveDrones();
-        this.game.physics.arcade.moveToPointer(this.player, 180);
+        this.angle = this.game.physics.arcade.angleToPointer(this.player);
+        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 180, null);
+        this.drones.moveDrones(this.angle);
+        //console.log(this.game.physics.arcade.distanceToXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY))
+        /*this.game.moveAndStop.toXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 180, 1000, {
+          onPositionReached: () => {
+            console.log('......')
+            //this.game.moveAndStop.stop(this.player)
+            //this.drones.stop()
+          },
+          onStopped: () => {
+            this.player.body.velocity.setTo(0, 0)
+            console.log('ah')
+          }
+        })*/
+        //this.game.physics.arcade.moveToObject(this.rank, this.player, 280)
+        //this.game.moveAndStop.toXY(this.rank, Math.floor(this.game.input.activePointer.worldX / 7 - 63), Math.floor(this.game.input.activePointer.worldY / 1.3), 180, null)
+        //console.log(this.game.physics.arcade, '-------', this.game.physics.arcade, this.game.input.activePointer.worldX)
         //console.log(game.physics.arcade)
         //console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
         //console.log(player.rotation)
         //player.body.moveUp(180)
         //game.physics.arcade.moveToPointer(player, 100);
       } else {
-        this.player.body.velocity.setTo(0, 0);
+        //this.drones.stop()
+        var active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y));
+        console.log(Math.floor(active));
+        if (Math.round(active) >= -1 && Math.round(active) <= 1) {
+          this.player.body.velocity.setTo(0, 0);
+        }
+
+        this.drones.moveDrones(this.angle);
+        this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
+        this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
+        this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
+        this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
       }
 
       if (this.cursors.up.isDown) {
@@ -609,7 +670,7 @@ var Game = new Phaser.Game(document.body.clientWidth, 800, Phaser.CANVAS, 'canva
 
 Kg.init(Game);
 
-},{"./drones":1,"./nave":3,"phaser-ce/build/custom/p2":4,"phaser-ce/build/custom/phaser-split":5,"phaser-ce/build/custom/pixi":6}],3:[function(require,module,exports){
+},{"./drones":1,"./nave":3,"phaser-ce/build/custom/p2":5,"phaser-ce/build/custom/phaser-split":6,"phaser-ce/build/custom/pixi":7,"phaser-move-and-stop-plugin":9}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -691,6 +752,160 @@ var Nave = function () {
 exports.default = Nave;
 
 },{}],4:[function(require,module,exports){
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 100) {
+    return;
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+    str
+  );
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return;
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name;
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+},{}],5:[function(require,module,exports){
 (function (global){
 /**
  * The MIT License (MIT)
@@ -15521,7 +15736,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (process){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
@@ -105889,7 +106104,7 @@ PIXI.canUseNewCanvasBlendModes = function ()
 */
 
 }).call(this,require('_process'))
-},{"_process":7}],6:[function(require,module,exports){
+},{"_process":12}],7:[function(require,module,exports){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
 * @copyright    2016 Photon Storm Ltd.
@@ -113689,7 +113904,660 @@ PIXI.TextureUvs = function ()
 
     return PIXI;
 }).call(this);
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+'use strict';
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.postUpdate = postUpdate;
+exports.isItemMoving = isItemMoving;
+exports.moveToXY = moveToXY;
+exports.moveToObject = moveToObject;
+exports.stopToMove = stopToMove;
+
+var _debug = require('debug');
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var debug = (0, _debug2.default)('phaser-move-and-stop-plugin:moveAndStop');
+var debugObjectToMove = function debugObjectToMove(objectsToMove, objectToMove, label) {
+	return debug(objectsToMove.indexOf(objectToMove) + ': ' + label);
+};
+
+var STATE = {
+	isMoving: 'isMoving',
+	hasStopped: 'hasStopped'
+};
+
+function findObjectToMove(objectsToMove, displayObject) {
+	if (displayObject) {
+		return objectsToMove.find(function (objectToMove) {
+			return objectToMove.displayObject === displayObject;
+		});
+	}
+	return undefined;
+}
+
+function addDisplayObjectToList(objectsToMove, displayObject) {
+	var info = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+	var objectToMove = {
+		displayObject: displayObject,
+		info: info
+	};
+	objectsToMove.push(objectToMove);
+	debugObjectToMove(objectsToMove, objectToMove, 'addDisplayObjectToList x:' + info.x + ' y:' + info.y + ' speed:' + info.speed + ' maxTime:' + info.maxTime + ' events:' + (info.events ? Object.keys(info.events) : info.events));
+}
+
+function removeObjectToMove(objectsToMove, objectToMove) {
+	debugObjectToMove(objectsToMove, objectToMove, "removeObjectToMove");
+	if (objectToMove) {
+		var index = objectsToMove.indexOf(objectToMove);
+		if (index > -1) {
+			objectsToMove.splice(index, 1);
+		}
+	}
+}
+
+function stopObjectMovement(objectToMove) {
+	var displayObject = objectToMove.displayObject,
+	    info = objectToMove.info;
+
+	displayObject.body.velocity.x = 0;
+	displayObject.body.velocity.y = 0;
+
+	if (info.events) {
+		if (info.events.onPositionReached) {
+			info.events.onPositionReached(displayObject);
+		}
+		if (info.events.onStopped) {
+			info.events.onStopped(displayObject);
+		}
+	}
+
+	info.move = STATE.hasStopped;
+}
+
+function updateObjectMovement(game, objectToMove) {
+	var displayObject = objectToMove.displayObject,
+	    info = objectToMove.info;
+
+	if (displayObject.alive && info.moveDistFromTarget && displayObject.body) {
+
+		if (isMoving(objectToMove)) {
+			var updatedDist = game.physics.arcade.distanceToXY(displayObject, info.x, info.y);
+			if (updatedDist === 0 || updatedDist > info.moveDistFromTarget) {
+				// update coordinates
+				displayObject.x = info.x;
+				displayObject.y = info.y;
+
+				// if displayObject is still moving, we ask to pahser to stop it (stop velocity)
+				stopObjectMovement(objectToMove);
+			} else {
+				//if not stopped, or no need to stop, we update last distance between current displayObject and targetted corrdinates
+				info.moveDistFromTarget = updatedDist;
+			}
+		}
+	}
+}
+
+function isMoving(objectToMove) {
+	var info = objectToMove.info;
+
+	return info.move === STATE.isMoving;
+}
+
+function hasStopped(objectToMove) {
+	var info = objectToMove.info;
+
+	return info.move === STATE.hasStopped;
+}
+
+function postUpdate(objectsToMove, game) {
+	var objectsNotAlive = [];
+	objectsToMove.forEach(function (objectToMove) {
+		var displayObject = objectToMove.displayObject,
+		    info = objectToMove.info;
+
+		if (!displayObject || !displayObject.alive || hasStopped(objectToMove)) {
+			if (info && info.events) {
+				if (info.events.onStopped) {
+					info.events.onStopped(displayObject);
+				}
+			}
+			objectsNotAlive.push(objectToMove);
+		} else {
+			updateObjectMovement(game, objectToMove);
+			if (hasStopped(objectToMove)) {
+				objectsNotAlive.push(objectToMove);
+			}
+		}
+	});
+
+	objectsNotAlive.forEach(function (objectToMove) {
+		removeObjectToMove(objectsToMove, objectToMove);
+	});
+}
+
+function isItemMoving(displayObject) {
+	if (!displayObject) {
+		throw new Error("object is undefined");
+	}
+	return displayObject.body && displayObject.body.velocity && (displayObject.body.velocity.x || displayObject.body.velocity.y);
+}
+
+function moveToXY(objectsToMove, game, displayObject, x, y, speed, maxTime, events) {
+	if (displayObject && displayObject.alive && displayObject.body) {
+		var objectToMove = findObjectToMove(objectsToMove, displayObject);
+
+		if (!objectToMove || objectToMove.info.x !== x || objectToMove.info.y !== y || objectToMove.info.speed !== speed || objectToMove.info.maxTime !== maxTime || objectToMove.info.events !== events) {
+			if (objectToMove) {
+				removeObjectToMove(objectsToMove, objectToMove);
+			}
+			var moveDistFromTarget = game.physics.arcade.distanceToXY(displayObject, x, y);
+			addDisplayObjectToList(objectsToMove, displayObject, {
+				move: STATE.isMoving,
+				x: x,
+				y: y,
+				speed: speed,
+				maxTime: maxTime,
+				events: events,
+				moveDistFromTarget: moveDistFromTarget,
+				moveDistFromTargetOrigin: moveDistFromTarget
+			});
+			return game.physics.arcade.moveToXY(displayObject, x, y, speed, maxTime);
+		}
+	}
+}
+
+function moveToObject(objectsToMove, game, displayObject, destination, speed, maxTime, events) {
+	return moveToXY(objectsToMove, game, displayObject, destination.x, destination.y, speed, maxTime, events);
+}
+
+function stopToMove(objectsToMove, displayObject) {
+	var objectToMove = findObjectToMove(objectsToMove, displayObject);
+	if (objectToMove) {
+		if (isMoving(objectToMove)) {
+			stopObjectMovement(objectToMove);
+		}
+	}
+}
+},{"debug":10}],9:[function(require,module,exports){
+'use strict';
+window.PIXI = require('phaser-ce/build/custom/pixi');
+window.p2 = require('phaser-ce/build/custom/p2');
+window.Phaser = require('phaser-ce/build/custom/phaser-split');
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _moveAndStopCore = require('./move-and-stop-core');
+
+//Plugin Core definition
+
+function MoveAndStop(game, parent) {
+	Phaser.Plugin.call(this, game, parent);
+	this.objectsToMove = [];
+	this.active = true; //enable reUpdate and update methods called by the parent
+}
+
+MoveAndStop.prototype = Object.create(Phaser.Plugin.prototype);
+
+MoveAndStop.prototype.postUpdate = function postUpdate_() {
+	return (0, _moveAndStopCore.postUpdate)(this.objectsToMove, this.game);
+};
+
+//Plugin moving functions
+
+MoveAndStop.prototype.toXY = function toXY(displayObject, x, y, speed, maxTime, events) {
+	return (0, _moveAndStopCore.moveToXY)(this.objectsToMove, this.game, displayObject, x, y, speed, maxTime, events);
+};
+
+MoveAndStop.prototype.toObject = function toObject(displayObject, destination, speed, maxTime, events) {
+	return (0, _moveAndStopCore.moveToObject)(this.objectsToMove, this.game, displayObject, destination, speed, maxTime, events);
+};
+
+MoveAndStop.prototype.stop = function stop(displayObject) {
+	return (0, _moveAndStopCore.stopToMove)(this.objectsToMove, displayObject);
+};
+
+// Utils
+
+MoveAndStop.prototype.isItemMoving = function (displayObject) {
+	return (0, _moveAndStopCore.isItemMoving)(displayObject);
+};
+
+exports.default = MoveAndStop;
+},{"./move-and-stop-core":8,"phaser-ce/build/custom/p2":5,"phaser-ce/build/custom/phaser-split":6,"phaser-ce/build/custom/pixi":7}],10:[function(require,module,exports){
+(function (process){
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = require('./debug');
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  '#0000CC', '#0000FF', '#0033CC', '#0033FF', '#0066CC', '#0066FF', '#0099CC',
+  '#0099FF', '#00CC00', '#00CC33', '#00CC66', '#00CC99', '#00CCCC', '#00CCFF',
+  '#3300CC', '#3300FF', '#3333CC', '#3333FF', '#3366CC', '#3366FF', '#3399CC',
+  '#3399FF', '#33CC00', '#33CC33', '#33CC66', '#33CC99', '#33CCCC', '#33CCFF',
+  '#6600CC', '#6600FF', '#6633CC', '#6633FF', '#66CC00', '#66CC33', '#9900CC',
+  '#9900FF', '#9933CC', '#9933FF', '#99CC00', '#99CC33', '#CC0000', '#CC0033',
+  '#CC0066', '#CC0099', '#CC00CC', '#CC00FF', '#CC3300', '#CC3333', '#CC3366',
+  '#CC3399', '#CC33CC', '#CC33FF', '#CC6600', '#CC6633', '#CC9900', '#CC9933',
+  '#CCCC00', '#CCCC33', '#FF0000', '#FF0033', '#FF0066', '#FF0099', '#FF00CC',
+  '#FF00FF', '#FF3300', '#FF3333', '#FF3366', '#FF3399', '#FF33CC', '#FF33FF',
+  '#FF6600', '#FF6633', '#FF9900', '#FF9933', '#FFCC00', '#FFCC33'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  }
+
+  // Internet Explorer and Edge do not support colors.
+  if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+    return false;
+  }
+
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+    // double check webkit in userAgent just in case we are in a worker
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return;
+
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit')
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = process.env.DEBUG;
+  }
+
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+}).call(this,require('_process'))
+},{"./debug":11,"_process":12}],11:[function(require,module,exports){
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = require('ms');
+
+/**
+ * Active `debug` instances.
+ */
+exports.instances = [];
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+ */
+
+exports.formatters = {};
+
+/**
+ * Select a color.
+ * @param {String} namespace
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor(namespace) {
+  var hash = 0, i;
+
+  for (i in namespace) {
+    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    hash |= 0; // Convert to 32bit integer
+  }
+
+  return exports.colors[Math.abs(hash) % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function createDebug(namespace) {
+
+  var prevTime;
+
+  function debug() {
+    // disabled?
+    if (!debug.enabled) return;
+
+    var self = debug;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // turn the `arguments` into a proper Array
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %O
+      args.unshift('%O');
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    // apply env-specific formatting (colors, etc.)
+    exports.formatArgs.call(self, args);
+
+    var logFn = debug.log || exports.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+
+  debug.namespace = namespace;
+  debug.enabled = exports.enabled(namespace);
+  debug.useColors = exports.useColors();
+  debug.color = selectColor(namespace);
+  debug.destroy = destroy;
+
+  // env-specific initialization logic for debug instances
+  if ('function' === typeof exports.init) {
+    exports.init(debug);
+  }
+
+  exports.instances.push(debug);
+
+  return debug;
+}
+
+function destroy () {
+  var index = exports.instances.indexOf(this);
+  if (index !== -1) {
+    exports.instances.splice(index, 1);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  exports.names = [];
+  exports.skips = [];
+
+  var i;
+  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+
+  for (i = 0; i < exports.instances.length; i++) {
+    var instance = exports.instances[i];
+    instance.enabled = exports.enabled(instance.namespace);
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  if (name[name.length - 1] === '*') {
+    return true;
+  }
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+},{"ms":4}],12:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 

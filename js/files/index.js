@@ -2,6 +2,9 @@ window.PIXI = require('phaser-ce/build/custom/pixi');
 window.p2 = require('phaser-ce/build/custom/p2');
 window.Phaser = require('phaser-ce/build/custom/phaser-split');
 
+//const Phaser = window.Phaser
+
+import MoveAndStopPlugin from "phaser-move-and-stop-plugin";
 import Nave from './nave'
 import Drones from './drones'
 
@@ -9,6 +12,7 @@ class KGalaxy {
   init(game) {
     this.game = game;
   }
+
 
   preload() {
     this.game.load.image('background', './assets/mapas/56A.jpg');
@@ -35,12 +39,12 @@ class KGalaxy {
   create() {
 
     this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
-
+    
     this.game.world.setBounds(0, 0, 8000, 8000);
-
+    
     this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-
+    
     // Portal izquierda abajo
     this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
     this.portal1.anchor.setTo(0.5, 0.5);
@@ -52,10 +56,11 @@ class KGalaxy {
     const player = this.ship.player
     
     this.drones = new Drones()
-    this.drones.createDrone(this, this.ship.player)
+    this.drones.createDrone(this, this.ship.player, Phaser)
 
     this.rank = this.game.add.sprite(Math.floor(player.x + player.width / 7 - 63), Math.floor(player.y + player.height / 1.3), 'rank');
     this.rank.anchor.setTo(0.5, 0.5);
+    this.game.physics.enable(this.rank, Phaser.Physics.ARCADE)
 
     const style = {
       font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
@@ -72,7 +77,10 @@ class KGalaxy {
     //  0.1 is the amount of linear interpolation to use.
     //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
     this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
-    
+    //this.game.moveAndStop = this.game.plugins.add(MoveAndStopPlugin);
+    this.x
+    this.y
+    this.angle
   }
 
   update() {
@@ -86,17 +94,47 @@ class KGalaxy {
 
       this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
       this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
-
+      this.x = this.game.input.activePointer.worldX
+      this.y = this.game.input.activePointer.worldY
+      
       this.ship.playerMove(this.drones)
-      this.drones.moveDrones()
-      this.game.physics.arcade.moveToPointer(this.player, 180);
+      this.angle = this.game.physics.arcade.angleToPointer(this.player)
+      this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 180, null);
+      this.drones.moveDrones(this.angle)
+      //console.log(this.game.physics.arcade.distanceToXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY))
+      /*this.game.moveAndStop.toXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 180, 1000, {
+        onPositionReached: () => {
+          console.log('......')
+          //this.game.moveAndStop.stop(this.player)
+          //this.drones.stop()
+        },
+        onStopped: () => {
+          this.player.body.velocity.setTo(0, 0)
+          console.log('ah')
+        }
+      })*/
+      //this.game.physics.arcade.moveToObject(this.rank, this.player, 280)
+      //this.game.moveAndStop.toXY(this.rank, Math.floor(this.game.input.activePointer.worldX / 7 - 63), Math.floor(this.game.input.activePointer.worldY / 1.3), 180, null)
+      //console.log(this.game.physics.arcade, '-------', this.game.physics.arcade, this.game.input.activePointer.worldX)
       //console.log(game.physics.arcade)
       //console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
       //console.log(player.rotation)
       //player.body.moveUp(180)
       //game.physics.arcade.moveToPointer(player, 100);
     } else {
-      this.player.body.velocity.setTo(0, 0);
+      //this.drones.stop()
+      const active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y))
+      console.log(Math.floor(active))
+      if (Math.round(active) >= -1 && Math.round(active) <= 1) {
+        this.player.body.velocity.setTo(0, 0,);
+      }
+
+      
+      this.drones.moveDrones(this.angle)
+      this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
+      this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
+      this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
+      this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
     }
 
     if (this.cursors.up.isDown) {
