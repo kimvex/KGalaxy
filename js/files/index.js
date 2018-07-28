@@ -97,9 +97,9 @@ class KGalaxy {
       this.x = this.game.input.activePointer.worldX
       this.y = this.game.input.activePointer.worldY
       
-      this.ship.playerMove(this.drones)
       this.angle = this.game.physics.arcade.angleToPointer(this.player)
       this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 180, null);
+      this.ship.playerMove(this.angle)
       this.drones.moveDrones(this.angle)
       //console.log(this.game.physics.arcade.distanceToXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY))
       /*this.game.moveAndStop.toXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 180, 1000, {
@@ -124,12 +124,11 @@ class KGalaxy {
     } else {
       //this.drones.stop()
       const active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y))
-      console.log(Math.floor(active))
+
       if (Math.round(active) >= -1 && Math.round(active) <= 1) {
         this.player.body.velocity.setTo(0, 0,);
       }
 
-      
       this.drones.moveDrones(this.angle)
       this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
       this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
