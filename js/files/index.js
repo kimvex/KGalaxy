@@ -7,12 +7,12 @@ window.Phaser = require('phaser-ce/build/custom/phaser-split');
 import MoveAndStopPlugin from "phaser-move-and-stop-plugin";
 import Nave from './nave'
 import Drones from './drones'
+import EventsOnClick from "./eventsOnClick";
 
-class KGalaxy {  
+class KGalaxy {
   init(game) {
     this.game = game;
   }
-
 
   preload() {
     this.game.load.image('background', './assets/mapas/56A.jpg');
@@ -34,27 +34,49 @@ class KGalaxy {
     this.game.load.spritesheet('iris8', './assets/drones/T6tuLeE.png');
     this.game.load.image('rank', './assets/rangos/103_rank20.png');
     this.game.load.image('portal1', './assets/portales/base3n.png');
+    this.game.load.image('laser', './assets/laser/2.png');
   }
 
   create() {
+    this.firingTimer = 0
 
     this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
     
     this.game.world.setBounds(0, 0, 8000, 8000);
     
-    this.game.physics.startSystem(Phaser.Physics.P2JS);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
+    //	Enable the physics bodies on all the sprites and turn on the visual debugger
+    //this.game.physics.p2.enable([this.portal1], true);
     
     // Portal izquierda abajo
     this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
     this.portal1.anchor.setTo(0.5, 0.5);
+    this.portal1.enableBody = true;
+    //this.portal1.physicsBodyType = Phaser.Physics.ARCADE;
+    this.game.physics.enable(this.portal1, Phaser.Physics.ARCADE);
 
     this.ship = new Nave()
     this.ship.shipConstruction(this, Phaser)
     //console.log(this.ship.player, 'whats?')
 
     const player = this.ship.player
-    
+
+    //
+    // this.bullets = this.game.add.weapon(30, 'laser')
+    // this.bullets.bulletSpeed = 600;
+    // this.bullets.trackSprite(player, 0, 0, true)
+    // this.bullets.fireRate = 1000;
+    this.bullets = this.game.add.group();
+    this.bullets.enableBody = true;
+    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.bullets.createMultiple(3000, 'laser');
+    this.bullets.setAll('anchor.x', 0.5);
+    this.bullets.setAll('anchor.y', 1);
+    this.bullets.setAll('outOfBoundsKill', true);
+    this.bullets.setAll('checkWorldBounds', true);
+
     this.drones = new Drones()
     this.drones.createDrone(this, this.ship.player, Phaser)
 
@@ -81,10 +103,16 @@ class KGalaxy {
     this.x
     this.y
     this.angle
+    
+
+    //this.game.physics.p2.enable([ this.portal1 ], true);
+    this.eventsOnClick = new EventsOnClick()
+    this.portal1.inputEnabled = true;
+    this.portal1.events.onInputDown.add(this.eventsOnClick.click, this)
   }
 
   update() {
-
+    
     //this.player.body.setZeroVelocity();
     this.player = this.ship.player
     if (this.game.input.activePointer.isDown) {
@@ -121,6 +149,29 @@ class KGalaxy {
       //console.log(player.rotation)
       //player.body.moveUp(180)
       //game.physics.arcade.moveToPointer(player, 100);
+      //  To avoid them being allowed to fire too fast we set a time limit
+      /*if (this.game.time.now > this.bulletTime) {
+        //  Grab the first bullet we can from the pool
+        this.bullet = this.bullets.getFirstExists(false);
+
+        if (this.bullet) {
+          //  And fire it
+          this.bullet.reset(this.player.x, this.player.y + 8);
+          this.bullet.body.velocity.y = -400;
+          this.bulletTime = this.game.time.now + 200;
+        }
+      }*/
+      //console.log(this.bullet)
+      if (this.game.time.now > this.firingTimer) {
+        this.fire = this.bullets.getFirstExists(false)
+        // And fire the bullet from this enemy
+        //console.log(this.fire, '---')
+        this.fire.reset(this.player.body.x, this.player.body.y);
+        ///this.bullets.fire();
+        this.game.physics.arcade.moveToObject(this.fire, this.portal1, 520);
+        this.firingTimer = this.game.time.now + 200
+        //this.game.physics.arcade.overlap(this.bullets, this.portal1, (a, b, c) => console.log(a, b, c, '----?'), null, this);
+      }
     } else {
       //this.drones.stop()
       const active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y))
@@ -134,8 +185,14 @@ class KGalaxy {
       this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
       this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
       this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
+      // this.eventsOnClick.fire
     }
+        this.game.physics.arcade.overlap(this.bullets, this.portal1, (a, b) => {
+          //a.kill()
+          b.kill()
+        }, null, this);
 
+    //console.log(this.cursors)
     if (this.cursors.up.isDown) {
       this.player.body.moveUp(180)
       /*console.log(game.camera.y, 'y')

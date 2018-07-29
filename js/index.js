@@ -513,6 +513,62 @@ exports.default = Drones;
 },{}],2:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _index = require('./index');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EventsOnClick = function () {
+  function EventsOnClick() {
+    _classCallCheck(this, EventsOnClick);
+  }
+
+  _createClass(EventsOnClick, [{
+    key: 'click',
+    value: function click() {
+      console.log('click');
+      /*console.log(pointer.position)
+      this.bodies = this.game.physics.p2.hitTest(pointer.position, [this.portal1]);
+       console.log(this.bodies.length)
+      for (var i = 0; i < this.bodies.length; i++) {
+        //	The bodies that come back are p2.Body objects.
+        //	The parent property is a Phaser.Physics.P2.Body which has a property called 'sprite'
+        //	This relates to the sprites we created earlier.
+        //	The 'key' property is just the texture name, which works well for this demo but you probably need something more robust for an actual game.
+        console.log(this.bodies[i].parent.sprite.key, 'yyyy')
+        let result = result + this.bodies[i].parent.sprite.key;
+         if (i < this.bodies.length - 1) {
+          result = result + ', ';
+          console.log(result)
+        }
+      }
+      //console.log(this, 'ehats?')
+      //console.log(this.bodies, [this.portal1],'bodies')*/
+    }
+  }, {
+    key: 'fire',
+    value: function fire(bullet, alien) {
+      console.log(alien, '-----');
+    }
+  }]);
+
+  return EventsOnClick;
+}();
+
+exports.default = EventsOnClick;
+
+},{"./index":3}],3:[function(require,module,exports){
+'use strict';
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _phaserMoveAndStopPlugin = require('phaser-move-and-stop-plugin');
@@ -526,6 +582,10 @@ var _nave2 = _interopRequireDefault(_nave);
 var _drones = require('./drones');
 
 var _drones2 = _interopRequireDefault(_drones);
+
+var _eventsOnClick = require('./eventsOnClick');
+
+var _eventsOnClick2 = _interopRequireDefault(_eventsOnClick);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -569,27 +629,49 @@ var KGalaxy = function () {
       this.game.load.spritesheet('iris8', './assets/drones/T6tuLeE.png');
       this.game.load.image('rank', './assets/rangos/103_rank20.png');
       this.game.load.image('portal1', './assets/portales/base3n.png');
+      this.game.load.image('laser', './assets/laser/2.png');
     }
   }, {
     key: 'create',
     value: function create() {
+      this.firingTimer = 0;
 
       this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
 
       this.game.world.setBounds(0, 0, 8000, 8000);
 
-      this.game.physics.startSystem(Phaser.Physics.P2JS);
+      this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
+      //	Enable the physics bodies on all the sprites and turn on the visual debugger
+      //this.game.physics.p2.enable([this.portal1], true);
 
       // Portal izquierda abajo
       this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
       this.portal1.anchor.setTo(0.5, 0.5);
+      this.portal1.enableBody = true;
+      //this.portal1.physicsBodyType = Phaser.Physics.ARCADE;
+      this.game.physics.enable(this.portal1, Phaser.Physics.ARCADE);
 
       this.ship = new _nave2.default();
       this.ship.shipConstruction(this, Phaser);
       //console.log(this.ship.player, 'whats?')
 
       var player = this.ship.player;
+
+      //
+      // this.bullets = this.game.add.weapon(30, 'laser')
+      // this.bullets.bulletSpeed = 600;
+      // this.bullets.trackSprite(player, 0, 0, true)
+      // this.bullets.fireRate = 1000;
+      this.bullets = this.game.add.group();
+      this.bullets.enableBody = true;
+      this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+      this.bullets.createMultiple(3000, 'laser');
+      this.bullets.setAll('anchor.x', 0.5);
+      this.bullets.setAll('anchor.y', 1);
+      this.bullets.setAll('outOfBoundsKill', true);
+      this.bullets.setAll('checkWorldBounds', true);
 
       this.drones = new _drones2.default();
       this.drones.createDrone(this, this.ship.player, Phaser);
@@ -617,6 +699,11 @@ var KGalaxy = function () {
       this.x;
       this.y;
       this.angle;
+
+      //this.game.physics.p2.enable([ this.portal1 ], true);
+      this.eventsOnClick = new _eventsOnClick2.default();
+      this.portal1.inputEnabled = true;
+      this.portal1.events.onInputDown.add(this.eventsOnClick.click, this);
     }
   }, {
     key: 'update',
@@ -658,6 +745,28 @@ var KGalaxy = function () {
         //console.log(player.rotation)
         //player.body.moveUp(180)
         //game.physics.arcade.moveToPointer(player, 100);
+        //  To avoid them being allowed to fire too fast we set a time limit
+        /*if (this.game.time.now > this.bulletTime) {
+          //  Grab the first bullet we can from the pool
+          this.bullet = this.bullets.getFirstExists(false);
+           if (this.bullet) {
+            //  And fire it
+            this.bullet.reset(this.player.x, this.player.y + 8);
+            this.bullet.body.velocity.y = -400;
+            this.bulletTime = this.game.time.now + 200;
+          }
+        }*/
+        //console.log(this.bullet)
+        if (this.game.time.now > this.firingTimer) {
+          this.fire = this.bullets.getFirstExists(false);
+          // And fire the bullet from this enemy
+          //console.log(this.fire, '---')
+          this.fire.reset(this.player.body.x, this.player.body.y);
+          ///this.bullets.fire();
+          this.game.physics.arcade.moveToObject(this.fire, this.portal1, 520);
+          this.firingTimer = this.game.time.now + 200;
+          //this.game.physics.arcade.overlap(this.bullets, this.portal1, (a, b, c) => console.log(a, b, c, '----?'), null, this);
+        }
       } else {
         //this.drones.stop()
         var active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y));
@@ -671,8 +780,14 @@ var KGalaxy = function () {
         this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
+        // this.eventsOnClick.fire
       }
+      this.game.physics.arcade.overlap(this.bullets, this.portal1, function (a, b) {
+        //a.kill()
+        b.kill();
+      }, null, this);
 
+      //console.log(this.cursors)
       if (this.cursors.up.isDown) {
         this.player.body.moveUp(180);
         /*console.log(game.camera.y, 'y')
@@ -711,7 +826,7 @@ var Game = new Phaser.Game(document.body.clientWidth, 800, Phaser.CANVAS, 'canva
 
 Kg.init(Game);
 
-},{"./drones":1,"./nave":3,"phaser-ce/build/custom/p2":5,"phaser-ce/build/custom/phaser-split":6,"phaser-ce/build/custom/pixi":7,"phaser-move-and-stop-plugin":9}],3:[function(require,module,exports){
+},{"./drones":1,"./eventsOnClick":2,"./nave":4,"phaser-ce/build/custom/p2":6,"phaser-ce/build/custom/phaser-split":7,"phaser-ce/build/custom/pixi":8,"phaser-move-and-stop-plugin":10}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -796,7 +911,7 @@ var Nave = function () {
 
 exports.default = Nave;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -950,7 +1065,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (global){
 /**
  * The MIT License (MIT)
@@ -15781,7 +15896,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (process){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
@@ -106149,7 +106264,7 @@ PIXI.canUseNewCanvasBlendModes = function ()
 */
 
 }).call(this,require('_process'))
-},{"_process":12}],7:[function(require,module,exports){
+},{"_process":13}],8:[function(require,module,exports){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
 * @copyright    2016 Photon Storm Ltd.
@@ -113949,7 +114064,7 @@ PIXI.TextureUvs = function ()
 
     return PIXI;
 }).call(this);
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -114129,7 +114244,7 @@ function stopToMove(objectsToMove, displayObject) {
 		}
 	}
 }
-},{"debug":10}],9:[function(require,module,exports){
+},{"debug":11}],10:[function(require,module,exports){
 'use strict';
 window.PIXI = require('phaser-ce/build/custom/pixi');
 window.p2 = require('phaser-ce/build/custom/p2');
@@ -114176,7 +114291,7 @@ MoveAndStop.prototype.isItemMoving = function (displayObject) {
 };
 
 exports.default = MoveAndStop;
-},{"./move-and-stop-core":8,"phaser-ce/build/custom/p2":5,"phaser-ce/build/custom/phaser-split":6,"phaser-ce/build/custom/pixi":7}],10:[function(require,module,exports){
+},{"./move-and-stop-core":9,"phaser-ce/build/custom/p2":6,"phaser-ce/build/custom/phaser-split":7,"phaser-ce/build/custom/pixi":8}],11:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -114375,7 +114490,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":11,"_process":12}],11:[function(require,module,exports){
+},{"./debug":12,"_process":13}],12:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -114602,7 +114717,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":4}],12:[function(require,module,exports){
+},{"ms":5}],13:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -114788,4 +114903,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[2]);
+},{}]},{},[3]);
