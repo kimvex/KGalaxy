@@ -2,6 +2,61 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Aliens = function () {
+  function Aliens() {
+    _classCallCheck(this, Aliens);
+  }
+
+  _createClass(Aliens, [{
+    key: 'init',
+    value: function init(config, Phaser) {
+      this.game = config.game;
+      this.Phaser = Phaser;
+    }
+  }, {
+    key: 'createAlien',
+    value: function createAlien(i, Phaser) {
+      console.log('yy', i);
+      var x = Math.floor(Math.random() * (4801 - 1775) + 1775);
+      var y = Math.floor(Math.random() * (4786 - 2920) + 2920);
+
+      console.log(x, y);
+      var name = i;
+      i = this.game.add.sprite(x, y, 'alien');
+      var style = {
+        font: "26px Arial", fill: "#ff0000", wordWrap: true, wordWrapWidth: i.width, align: "center", marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'block'
+      };
+
+      i.vida = 100;
+      i.name = name;
+      i.anchor.setTo(0.5, 0.5);
+      i.smoothed = false;
+      this.game.physics.enable(i, Phaser.Physics.ARCADE);
+      i.inputEnabled = true;
+      i.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, i), this);
+      i.nameP = this.game.add.text(x, y, name, style);
+      //events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, e), this)
+    }
+  }]);
+
+  return Aliens;
+}();
+
+exports.default = Aliens;
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
         value: true
 });
 
@@ -510,7 +565,7 @@ var Drones = function () {
 
 exports.default = Drones;
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -526,6 +581,8 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+window.Phaser = require('phaser-ce/build/custom/phaser-split');
 
 var EventsOnClick = function () {
   function EventsOnClick() {
@@ -548,16 +605,35 @@ var EventsOnClick = function () {
         this.fire = this.bullets.getFirstExists(false);
 
         this.fire.reset(this.player.body.x, this.player.body.y);
-
+        if (this.enemy.vida <= 0) {
+          var name = this.enemy.name;
+          this.enemy.kill();
+          this.enemy.nameP.destroy();
+          this.shooter = false;
+          this.enemy = undefined;
+          this.fire.kill();
+          this.enemys.createAlien.call(this, name, Phaser);
+          this.selectable.destroy();
+          return;
+        }
         this.game.physics.arcade.moveToObject(this.fire, this.enemy, 320);
         this.firingTimer = this.game.time.now + 500;
+        this.enemy.vida = this.enemy.vida - 10;
       }
     }
   }, {
     key: 'selectEnemy',
     value: function selectEnemy(enemy) {
+
       this.ship.stop.call(this);
       this.enemy = enemy;
+      if (this.selectable) {
+        this.selectable.destroy();
+      }
+      this.selectable = this.game.add.sprite(-10, 0, 'selectable');
+      this.selectable.scale.setTo(.2, .2);
+      this.selectable.x = this.enemy.world.x - 70;
+      this.selectable.y = this.enemy.world.y - 70;
     }
   }, {
     key: 'fire',
@@ -569,7 +645,7 @@ var EventsOnClick = function () {
 
 exports.default = EventsOnClick;
 
-},{"./index":3}],3:[function(require,module,exports){
+},{"./index":4,"phaser-ce/build/custom/phaser-split":8}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -589,6 +665,10 @@ var _drones2 = _interopRequireDefault(_drones);
 var _eventsOnClick = require('./eventsOnClick');
 
 var _eventsOnClick2 = _interopRequireDefault(_eventsOnClick);
+
+var _aliens = require('./aliens');
+
+var _aliens2 = _interopRequireDefault(_aliens);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -632,14 +712,17 @@ var KGalaxy = function () {
       this.game.load.spritesheet('iris8', './assets/drones/T6tuLeE.png');
       this.game.load.image('rank', './assets/rangos/103_rank20.png');
       this.game.load.image('portal1', './assets/portales/MgChHOY.png');
-      this.game.load.image('laser', './assets/laser/x1.png');
+      this.game.load.image('laser', './assets/laser/2.png');
+      this.game.load.spritesheet('alien', './assets/aliens/yhBb6B0.png');
+      this.game.load.image('selectable', './assets/miselaneas/circle-png-7.png');
     }
   }, {
     key: 'create',
     value: function create() {
       var _this = this;
 
-      this.emenys = [this.portal1, this.portal2];
+      this.portals = [this.portal1, this.portal2];
+      this.enemies = 20;
       this.firingTimer = 0;
 
       this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
@@ -649,6 +732,47 @@ var KGalaxy = function () {
       this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
+      this.eventsOnClick = new _eventsOnClick2.default();
+      this.enemy;
+      this.iterating;
+      this.selectable;
+      this.portals.map(function (e, index) {
+        // Portal izquierda abajo
+        if (_this.iterating < index || index > 0) {
+          e = _this.game.add.sprite(4800, 4786, 'portal1');
+        } else {
+          e = _this.game.add.sprite(1775, 4786, 'portal1');
+        }
+        e.anchor.setTo(0.5, 0.5);
+        e.enableBody = true;
+        //e.physicsBodyType = Phaser.Physics.ARCADE;
+        _this.game.physics.enable(e, Phaser.Physics.ARCADE);
+      });
+
+      this.enemys = new _aliens2.default();
+      this.enemys.init(this, Phaser);
+
+      for (var i = 0; i <= this.enemies; i++) {
+        console.log('?');
+        this.enemys.createAlien.call(this, 'a' + i, Phaser);
+      }
+
+      //this.game.physics.p2.enable([ this.portal1 ], true);
+      /*this.iterating
+      this.emenys.map((e, index) => {
+        // Portal izquierda abajo
+        if (this.iterating < index || index > 0) {
+          e = this.game.add.sprite(800, 4786, 'portal1');
+        } else {
+          e = this.game.add.sprite(1775, 4786, 'portal1');
+        }
+        e.anchor.setTo(0.5, 0.5);
+        e.enableBody = true;
+        //e.physicsBodyType = Phaser.Physics.ARCADE;
+        this.game.physics.enable(e, Phaser.Physics.ARCADE);
+         e.inputEnabled = true;
+        e.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, e), this)
+      })*/
       //	Enable the physics bodies on all the sprites and turn on the visual debugger
       //this.game.physics.p2.enable([this.portal1], true);
 
@@ -683,14 +807,16 @@ var KGalaxy = function () {
       var style = {
         font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
         marginRight: 'auto',
-        display: 'block'
+        display: 'block',
+        textShadow: "2px 2px #ff0000"
       };
 
       this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
+      this.text.fontWeight = 'bold';
+      this.text.setShadow(2, 2, 'rgba(5, 5, 5, 0.9)', 10);
 
       this.cursors = this.game.input.keyboard.createCursorKeys();
       this.shooter = false;
-      this.eventsOnClick = new _eventsOnClick2.default();
 
       this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
       this.key1.onDown.add(this.eventsOnClick.click, this);
@@ -700,38 +826,18 @@ var KGalaxy = function () {
       //  0.1 is the amount of linear interpolation to use.
       //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
       this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
-      //this.game.moveAndStop = this.game.plugins.add(MoveAndStopPlugin);
       this.x;
       this.y;
       this.angle;
-      this.enemy;
 
       //this.game.physics.p2.enable([ this.portal1 ], true);
-      this.iterating;
-      this.emenys.map(function (e, index) {
-        // Portal izquierda abajo
-        if (_this.iterating < index || index > 0) {
-          e = _this.game.add.sprite(800, 4786, 'portal1');
-        } else {
-          e = _this.game.add.sprite(1775, 4786, 'portal1');
-        }
-        e.anchor.setTo(0.5, 0.5);
-        e.enableBody = true;
-        //e.physicsBodyType = Phaser.Physics.ARCADE;
-        _this.game.physics.enable(e, Phaser.Physics.ARCADE);
-
-        e.inputEnabled = true;
-        e.events.onInputDown.add(_this.eventsOnClick.selectEnemy.bind(_this, e), _this);
-      });
     }
   }, {
     key: 'update',
     value: function update() {
 
-      //this.player.body.setZeroVelocity();
       this.player = this.ship.player;
       if (this.game.input.activePointer.isDown) {
-        //this.player.body.moveRight(180);
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
 
@@ -741,43 +847,10 @@ var KGalaxy = function () {
         this.y = this.game.input.activePointer.worldY;
 
         this.angle = this.game.physics.arcade.angleToPointer(this.player);
-        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 280, null);
+        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 580, null);
         this.ship.playerMove(this.angle);
         this.drones.moveDrones(this.angle);
-        //console.log(this.game.physics.arcade.distanceToXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY))
-        /*this.game.moveAndStop.toXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 180, 1000, {
-          onPositionReached: () => {
-            console.log('......')
-            //this.game.moveAndStop.stop(this.player)
-            //this.drones.stop()
-          },
-          onStopped: () => {
-            this.player.body.velocity.setTo(0, 0)
-            console.log('ah')
-          }
-        })*/
-        //this.game.physics.arcade.moveToObject(this.rank, this.player, 280)
-        //this.game.moveAndStop.toXY(this.rank, Math.floor(this.game.input.activePointer.worldX / 7 - 63), Math.floor(this.game.input.activePointer.worldY / 1.3), 180, null)
-        //console.log(this.game.physics.arcade, '-------', this.game.physics.arcade, this.game.input.activePointer.worldX)
-        //console.log(game.physics.arcade)
-        //console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
-        //console.log(player.rotation)
-        //player.body.moveUp(180)
-        //game.physics.arcade.moveToPointer(player, 100);
-        //  To avoid them being allowed to fire too fast we set a time limit
-        /*if (this.game.time.now > this.bulletTime) {
-          //  Grab the first bullet we can from the pool
-          this.bullet = this.bullets.getFirstExists(false);
-           if (this.bullet) {
-            //  And fire it
-            this.bullet.reset(this.player.x, this.player.y + 8);
-            this.bullet.body.velocity.y = -400;
-            this.bulletTime = this.game.time.now + 200;
-          }
-        }*/
-        //console.log(this.bullet)
       } else {
-        //this.drones.stop()
         var active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y));
         if (Math.round(active) >= 1 && Math.round(active) <= 6) {
           this.player.body.velocity.setTo(0, 0);
@@ -795,24 +868,6 @@ var KGalaxy = function () {
           b.kill();
         }, null, this);
       }
-
-      /*if (this.cursors.up.isDown) {
-        this.player.body.moveUp(180)
-        console.log(game.camera.y, 'y')
-        console.log(game.physics.arcade, 'yyyy')
-      }
-      else if (this.cursors.down.isDown) {
-        this.player.body.moveDown(180);
-        console.log(game.camera.y, 'y')
-      }
-       if (this.cursors.left.isDown) {
-        this.player.body.velocity.x = -180;
-        console.log(game.camera.x, 'x')
-      }
-      else if (this.cursors.right.isDown) {
-        console.log(game.camera.x, 'x')
-        this.player.body.moveRight(180);
-      }*/
     }
   }, {
     key: 'render',
@@ -835,7 +890,7 @@ var Game = new Phaser.Game(document.body.clientWidth, 800, Phaser.CANVAS, 'canva
 
 Kg.init(Game);
 
-},{"./drones":1,"./eventsOnClick":2,"./nave":4,"phaser-ce/build/custom/p2":6,"phaser-ce/build/custom/phaser-split":7,"phaser-ce/build/custom/pixi":8,"phaser-move-and-stop-plugin":10}],4:[function(require,module,exports){
+},{"./aliens":1,"./drones":2,"./eventsOnClick":3,"./nave":5,"phaser-ce/build/custom/p2":7,"phaser-ce/build/custom/phaser-split":8,"phaser-ce/build/custom/pixi":9,"phaser-move-and-stop-plugin":11}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -926,7 +981,7 @@ var Nave = function () {
 
 exports.default = Nave;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -1080,7 +1135,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (global){
 /**
  * The MIT License (MIT)
@@ -15911,7 +15966,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (process){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
@@ -106279,7 +106334,7 @@ PIXI.canUseNewCanvasBlendModes = function ()
 */
 
 }).call(this,require('_process'))
-},{"_process":13}],8:[function(require,module,exports){
+},{"_process":14}],9:[function(require,module,exports){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
 * @copyright    2016 Photon Storm Ltd.
@@ -114079,7 +114134,7 @@ PIXI.TextureUvs = function ()
 
     return PIXI;
 }).call(this);
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -114259,7 +114314,7 @@ function stopToMove(objectsToMove, displayObject) {
 		}
 	}
 }
-},{"debug":11}],10:[function(require,module,exports){
+},{"debug":12}],11:[function(require,module,exports){
 'use strict';
 window.PIXI = require('phaser-ce/build/custom/pixi');
 window.p2 = require('phaser-ce/build/custom/p2');
@@ -114306,7 +114361,7 @@ MoveAndStop.prototype.isItemMoving = function (displayObject) {
 };
 
 exports.default = MoveAndStop;
-},{"./move-and-stop-core":9,"phaser-ce/build/custom/p2":6,"phaser-ce/build/custom/phaser-split":7,"phaser-ce/build/custom/pixi":8}],11:[function(require,module,exports){
+},{"./move-and-stop-core":10,"phaser-ce/build/custom/p2":7,"phaser-ce/build/custom/phaser-split":8,"phaser-ce/build/custom/pixi":9}],12:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -114505,7 +114560,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":12,"_process":13}],12:[function(require,module,exports){
+},{"./debug":13,"_process":14}],13:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -114732,7 +114787,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":5}],13:[function(require,module,exports){
+},{"ms":6}],14:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -114918,4 +114973,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[3]);
+},{}]},{},[4]);
