@@ -535,30 +535,33 @@ var EventsOnClick = function () {
   _createClass(EventsOnClick, [{
     key: 'click',
     value: function click() {
-      console.log('click');
-      /*console.log(pointer.position)
-      this.bodies = this.game.physics.p2.hitTest(pointer.position, [this.portal1]);
-       console.log(this.bodies.length)
-      for (var i = 0; i < this.bodies.length; i++) {
-        //	The bodies that come back are p2.Body objects.
-        //	The parent property is a Phaser.Physics.P2.Body which has a property called 'sprite'
-        //	This relates to the sprites we created earlier.
-        //	The 'key' property is just the texture name, which works well for this demo but you probably need something more robust for an actual game.
-        console.log(this.bodies[i].parent.sprite.key, 'yyyy')
-        let result = result + this.bodies[i].parent.sprite.key;
-         if (i < this.bodies.length - 1) {
-          result = result + ', ';
-          console.log(result)
-        }
+      if (this.shooter && this.enemy) {
+        this.shooter = false;
+      } else if (!this.shooter && this.enemy) {
+        this.shooter = true;
       }
-      //console.log(this, 'ehats?')
-      //console.log(this.bodies, [this.portal1],'bodies')*/
+    }
+  }, {
+    key: 'shoot',
+    value: function shoot() {
+      if (this.game.time.now > this.firingTimer) {
+        this.fire = this.bullets.getFirstExists(false);
+
+        this.fire.reset(this.player.body.x, this.player.body.y);
+
+        this.game.physics.arcade.moveToObject(this.fire, this.enemy, 320);
+        this.firingTimer = this.game.time.now + 500;
+      }
+    }
+  }, {
+    key: 'selectEnemy',
+    value: function selectEnemy(enemy) {
+      this.ship.stop.call(this);
+      this.enemy = enemy;
     }
   }, {
     key: 'fire',
-    value: function fire(bullet, alien) {
-      console.log(alien, '-----');
-    }
+    value: function fire(bullet, alien) {}
   }]);
 
   return EventsOnClick;
@@ -628,12 +631,15 @@ var KGalaxy = function () {
       this.game.load.spritesheet('iris7', './assets/drones/Up9S8En.png');
       this.game.load.spritesheet('iris8', './assets/drones/T6tuLeE.png');
       this.game.load.image('rank', './assets/rangos/103_rank20.png');
-      this.game.load.image('portal1', './assets/portales/base3n.png');
-      this.game.load.image('laser', './assets/laser/2.png');
+      this.game.load.image('portal1', './assets/portales/MgChHOY.png');
+      this.game.load.image('laser', './assets/laser/x1.png');
     }
   }, {
     key: 'create',
     value: function create() {
+      var _this = this;
+
+      this.emenys = [this.portal1, this.portal2];
       this.firingTimer = 0;
 
       this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
@@ -646,12 +652,6 @@ var KGalaxy = function () {
       //	Enable the physics bodies on all the sprites and turn on the visual debugger
       //this.game.physics.p2.enable([this.portal1], true);
 
-      // Portal izquierda abajo
-      this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
-      this.portal1.anchor.setTo(0.5, 0.5);
-      this.portal1.enableBody = true;
-      //this.portal1.physicsBodyType = Phaser.Physics.ARCADE;
-      this.game.physics.enable(this.portal1, Phaser.Physics.ARCADE);
 
       this.ship = new _nave2.default();
       this.ship.shipConstruction(this, Phaser);
@@ -668,8 +668,8 @@ var KGalaxy = function () {
       this.bullets.enableBody = true;
       this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
       this.bullets.createMultiple(3000, 'laser');
-      this.bullets.setAll('anchor.x', 0.5);
-      this.bullets.setAll('anchor.y', 1);
+      this.bullets.setAll('anchor.x', 0.1);
+      this.bullets.setAll('anchor.y', 0.1);
       this.bullets.setAll('outOfBoundsKill', true);
       this.bullets.setAll('checkWorldBounds', true);
 
@@ -689,6 +689,11 @@ var KGalaxy = function () {
       this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
 
       this.cursors = this.game.input.keyboard.createCursorKeys();
+      this.shooter = false;
+      this.eventsOnClick = new _eventsOnClick2.default();
+
+      this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+      this.key1.onDown.add(this.eventsOnClick.click, this);
 
       //  Notice that the sprite doesn't have any momentum at all,
       //  it's all just set by the camera follow type.
@@ -699,11 +704,25 @@ var KGalaxy = function () {
       this.x;
       this.y;
       this.angle;
+      this.enemy;
 
       //this.game.physics.p2.enable([ this.portal1 ], true);
-      this.eventsOnClick = new _eventsOnClick2.default();
-      this.portal1.inputEnabled = true;
-      this.portal1.events.onInputDown.add(this.eventsOnClick.click, this);
+      this.iterating;
+      this.emenys.map(function (e, index) {
+        // Portal izquierda abajo
+        if (_this.iterating < index || index > 0) {
+          e = _this.game.add.sprite(800, 4786, 'portal1');
+        } else {
+          e = _this.game.add.sprite(1775, 4786, 'portal1');
+        }
+        e.anchor.setTo(0.5, 0.5);
+        e.enableBody = true;
+        //e.physicsBodyType = Phaser.Physics.ARCADE;
+        _this.game.physics.enable(e, Phaser.Physics.ARCADE);
+
+        e.inputEnabled = true;
+        e.events.onInputDown.add(_this.eventsOnClick.selectEnemy.bind(_this, e), _this);
+      });
     }
   }, {
     key: 'update',
@@ -722,7 +741,7 @@ var KGalaxy = function () {
         this.y = this.game.input.activePointer.worldY;
 
         this.angle = this.game.physics.arcade.angleToPointer(this.player);
-        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 180, null);
+        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 280, null);
         this.ship.playerMove(this.angle);
         this.drones.moveDrones(this.angle);
         //console.log(this.game.physics.arcade.distanceToXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY))
@@ -757,21 +776,10 @@ var KGalaxy = function () {
           }
         }*/
         //console.log(this.bullet)
-        if (this.game.time.now > this.firingTimer) {
-          this.fire = this.bullets.getFirstExists(false);
-          // And fire the bullet from this enemy
-          //console.log(this.fire, '---')
-          this.fire.reset(this.player.body.x, this.player.body.y);
-          ///this.bullets.fire();
-          this.game.physics.arcade.moveToObject(this.fire, this.portal1, 520);
-          this.firingTimer = this.game.time.now + 200;
-          //this.game.physics.arcade.overlap(this.bullets, this.portal1, (a, b, c) => console.log(a, b, c, '----?'), null, this);
-        }
       } else {
         //this.drones.stop()
         var active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y));
-
-        if (Math.round(active) >= -1 && Math.round(active) <= 1) {
+        if (Math.round(active) >= 1 && Math.round(active) <= 6) {
           this.player.body.velocity.setTo(0, 0);
         }
 
@@ -780,30 +788,31 @@ var KGalaxy = function () {
         this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
-        // this.eventsOnClick.fire
       }
-      this.game.physics.arcade.overlap(this.bullets, this.portal1, function (a, b) {
-        //a.kill()
-        b.kill();
-      }, null, this);
+      if (this.shooter && this.enemy) {
+        this.eventsOnClick.shoot.call(this);
+        this.game.physics.arcade.overlap(this.bullets, this.enemy, function (a, b) {
+          b.kill();
+        }, null, this);
+      }
 
-      //console.log(this.cursors)
-      if (this.cursors.up.isDown) {
-        this.player.body.moveUp(180);
-        /*console.log(game.camera.y, 'y')
-        console.log(game.physics.arcade, 'yyyy')*/
-      } else if (this.cursors.down.isDown) {
+      /*if (this.cursors.up.isDown) {
+        this.player.body.moveUp(180)
+        console.log(game.camera.y, 'y')
+        console.log(game.physics.arcade, 'yyyy')
+      }
+      else if (this.cursors.down.isDown) {
         this.player.body.moveDown(180);
-        console.log(game.camera.y, 'y');
+        console.log(game.camera.y, 'y')
       }
-
-      if (this.cursors.left.isDown) {
+       if (this.cursors.left.isDown) {
         this.player.body.velocity.x = -180;
-        console.log(game.camera.x, 'x');
-      } else if (this.cursors.right.isDown) {
-        console.log(game.camera.x, 'x');
-        this.player.body.moveRight(180);
+        console.log(game.camera.x, 'x')
       }
+      else if (this.cursors.right.isDown) {
+        console.log(game.camera.x, 'x')
+        this.player.body.moveRight(180);
+      }*/
     }
   }, {
     key: 'render',
@@ -903,6 +912,12 @@ var Nave = function () {
     key: 'player',
     value: function player() {
       return this.player;
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      console.log('ya');
+      this.player.body.velocity.setTo(0, 0);
     }
   }]);
 

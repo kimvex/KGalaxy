@@ -57,6 +57,11 @@ class Nave {
   player() {
     return this.player
   }
+
+  stop() {
+    console.log('ya')
+    this.player.body.velocity.setTo(0, 0);
+  }
 }
 
 export default Nave;
