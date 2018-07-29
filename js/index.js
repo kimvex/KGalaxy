@@ -2,6 +2,61 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Aliens = function () {
+  function Aliens() {
+    _classCallCheck(this, Aliens);
+  }
+
+  _createClass(Aliens, [{
+    key: 'init',
+    value: function init(config, Phaser) {
+      this.game = config.game;
+      this.Phaser = Phaser;
+    }
+  }, {
+    key: 'createAlien',
+    value: function createAlien(i, Phaser) {
+      console.log('yy', i);
+      var x = Math.floor(Math.random() * (4801 - 1775) + 1775);
+      var y = Math.floor(Math.random() * (4786 - 2920) + 2920);
+
+      console.log(x, y);
+      var name = i;
+      i = this.game.add.sprite(x, y, 'alien');
+      var style = {
+        font: "26px Arial", fill: "#ff0000", wordWrap: true, wordWrapWidth: i.width, align: "center", marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'block'
+      };
+
+      i.vida = 100;
+      i.name = name;
+      i.anchor.setTo(0.5, 0.5);
+      i.smoothed = false;
+      this.game.physics.enable(i, Phaser.Physics.ARCADE);
+      i.inputEnabled = true;
+      i.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, i), this);
+      i.nameP = this.game.add.text(x, y, name, style);
+      //events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, e), this)
+    }
+  }]);
+
+  return Aliens;
+}();
+
+exports.default = Aliens;
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
         value: true
 });
 
@@ -21,12 +76,12 @@ var Drones = function () {
                         this.game = config.game;
 
                         //Abajo Atras
-                        this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 40), 'iris1');
+                        this.iris1 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 490), 'iris1');
                         this.iris1.anchor.setTo(0.5, 0.5);
                         this.game.physics.enable(this.iris1, Phaser.Physics.ARCADE);
 
                         // Arriba Atras
-                        this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 140), 'iris1');
+                        this.iris2 = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 150), Math.floor(this.player.y + this.player.height - 10), 'iris1');
                         this.iris2.anchor.setTo(0.5, 0.5);
                         this.game.physics.enable(this.iris2, Phaser.Physics.ARCADE);
 
@@ -361,7 +416,48 @@ var Drones = function () {
                                         break;
                                 case angle > -0.5 && angle < 1:
                                         // Derecha
-                                        console.log('logs and more logs');
+                                        //Abajo Atras
+                                        this.iris1.loadTexture('iris1', 100, false);
+                                        this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+                                        this.iris1.y = Math.floor(this.player.world.y + this.player.height - 40);
+
+                                        // Arriba Atras
+                                        this.iris2.loadTexture('iris1', 100, false);
+                                        this.iris2.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
+                                        this.iris2.y = Math.floor(this.player.world.y + this.player.height - 140);
+
+                                        // Atras Izquierda
+                                        this.iris3.loadTexture('iris1', 100, false);
+                                        this.iris3.x = Math.floor(this.player.world.x + this.player.width / 7 - 210);
+                                        this.iris3.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Atras Derecha
+                                        this.iris4.loadTexture('iris1', 100, false);
+                                        this.iris4.x = Math.floor(this.player.world.x + this.player.width / 7 - 120);
+                                        this.iris4.y = Math.floor(this.player.world.y + this.player.height - 90);
+
+                                        // Arriba Arriba
+                                        this.iris5.loadTexture('iris1', 100, false);
+                                        this.iris5.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris5.y = Math.floor(this.player.world.y + this.player.height - 230);
+
+                                        // Arriba Abajo
+                                        this.iris6.loadTexture('iris1', 100, false);
+                                        this.iris6.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris6.y = Math.floor(this.player.world.y + this.player.height - 170);
+
+                                        // Abajo Arriba
+                                        this.iris7.loadTexture('iris1', 100, false);
+                                        this.iris7.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris7.y = Math.floor(this.player.world.y + this.player.height - -85);
+
+                                        // Abajo Abajo
+                                        this.iris8.loadTexture('iris1', 100, false);
+                                        this.iris8.x = Math.floor(this.player.world.x + this.player.width / 7 - 10);
+                                        this.iris8.y = Math.floor(this.player.world.y + this.player.height - -20);
+                                        break;
+                                case angle == undefined:
+                                        // Derecha
                                         //Abajo Atras
                                         this.iris1.loadTexture('iris1', 100, false);
                                         this.iris1.x = Math.floor(this.player.world.x + this.player.width / 7 - 150);
@@ -469,7 +565,87 @@ var Drones = function () {
 
 exports.default = Drones;
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _index = require('./index');
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+window.Phaser = require('phaser-ce/build/custom/phaser-split');
+
+var EventsOnClick = function () {
+  function EventsOnClick() {
+    _classCallCheck(this, EventsOnClick);
+  }
+
+  _createClass(EventsOnClick, [{
+    key: 'click',
+    value: function click() {
+      if (this.shooter && this.enemy) {
+        this.shooter = false;
+      } else if (!this.shooter && this.enemy) {
+        this.shooter = true;
+      }
+    }
+  }, {
+    key: 'shoot',
+    value: function shoot() {
+      if (this.game.time.now > this.firingTimer) {
+        this.fire = this.bullets.getFirstExists(false);
+
+        this.fire.reset(this.player.body.x, this.player.body.y);
+        if (this.enemy.vida <= 0) {
+          var name = this.enemy.name;
+          this.enemy.kill();
+          this.enemy.nameP.destroy();
+          this.shooter = false;
+          this.enemy = undefined;
+          this.fire.kill();
+          this.enemys.createAlien.call(this, name, Phaser);
+          this.selectable.destroy();
+          return;
+        }
+        this.game.physics.arcade.moveToObject(this.fire, this.enemy, 320);
+        this.firingTimer = this.game.time.now + 500;
+        this.enemy.vida = this.enemy.vida - 10;
+      }
+    }
+  }, {
+    key: 'selectEnemy',
+    value: function selectEnemy(enemy) {
+
+      this.ship.stop.call(this);
+      this.enemy = enemy;
+      if (this.selectable) {
+        this.selectable.destroy();
+      }
+      this.selectable = this.game.add.sprite(-10, 0, 'selectable');
+      this.selectable.scale.setTo(.2, .2);
+      this.selectable.x = this.enemy.world.x - 70;
+      this.selectable.y = this.enemy.world.y - 70;
+    }
+  }, {
+    key: 'fire',
+    value: function fire(bullet, alien) {}
+  }]);
+
+  return EventsOnClick;
+}();
+
+exports.default = EventsOnClick;
+
+},{"./index":4,"phaser-ce/build/custom/phaser-split":8}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -485,6 +661,14 @@ var _nave2 = _interopRequireDefault(_nave);
 var _drones = require('./drones');
 
 var _drones2 = _interopRequireDefault(_drones);
+
+var _eventsOnClick = require('./eventsOnClick');
+
+var _eventsOnClick2 = _interopRequireDefault(_eventsOnClick);
+
+var _aliens = require('./aliens');
+
+var _aliens2 = _interopRequireDefault(_aliens);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -527,28 +711,91 @@ var KGalaxy = function () {
       this.game.load.spritesheet('iris7', './assets/drones/Up9S8En.png');
       this.game.load.spritesheet('iris8', './assets/drones/T6tuLeE.png');
       this.game.load.image('rank', './assets/rangos/103_rank20.png');
-      this.game.load.image('portal1', './assets/portales/base3n.png');
+      this.game.load.image('portal1', './assets/portales/MgChHOY.png');
+      this.game.load.image('laser', './assets/laser/2.png');
+      this.game.load.spritesheet('alien', './assets/aliens/yhBb6B0.png');
+      this.game.load.image('selectable', './assets/miselaneas/circle-png-7.png');
     }
   }, {
     key: 'create',
     value: function create() {
+      var _this = this;
+
+      this.portals = [this.portal1, this.portal2];
+      this.enemies = 20;
+      this.firingTimer = 0;
 
       this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
 
       this.game.world.setBounds(0, 0, 8000, 8000);
 
-      this.game.physics.startSystem(Phaser.Physics.P2JS);
+      this.game.physics.startSystem(Phaser.Physics.ARCADE);
       this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 
-      // Portal izquierda abajo
-      this.portal1 = this.game.add.sprite(1775, 4786, 'portal1');
-      this.portal1.anchor.setTo(0.5, 0.5);
+      this.eventsOnClick = new _eventsOnClick2.default();
+      this.enemy;
+      this.iterating;
+      this.selectable;
+      this.portals.map(function (e, index) {
+        // Portal izquierda abajo
+        if (_this.iterating < index || index > 0) {
+          e = _this.game.add.sprite(4800, 4786, 'portal1');
+        } else {
+          e = _this.game.add.sprite(1775, 4786, 'portal1');
+        }
+        e.anchor.setTo(0.5, 0.5);
+        e.enableBody = true;
+        //e.physicsBodyType = Phaser.Physics.ARCADE;
+        _this.game.physics.enable(e, Phaser.Physics.ARCADE);
+      });
+
+      this.enemys = new _aliens2.default();
+      this.enemys.init(this, Phaser);
+
+      for (var i = 0; i <= this.enemies; i++) {
+        console.log('?');
+        this.enemys.createAlien.call(this, 'a' + i, Phaser);
+      }
+
+      //this.game.physics.p2.enable([ this.portal1 ], true);
+      /*this.iterating
+      this.emenys.map((e, index) => {
+        // Portal izquierda abajo
+        if (this.iterating < index || index > 0) {
+          e = this.game.add.sprite(800, 4786, 'portal1');
+        } else {
+          e = this.game.add.sprite(1775, 4786, 'portal1');
+        }
+        e.anchor.setTo(0.5, 0.5);
+        e.enableBody = true;
+        //e.physicsBodyType = Phaser.Physics.ARCADE;
+        this.game.physics.enable(e, Phaser.Physics.ARCADE);
+         e.inputEnabled = true;
+        e.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, e), this)
+      })*/
+      //	Enable the physics bodies on all the sprites and turn on the visual debugger
+      //this.game.physics.p2.enable([this.portal1], true);
+
 
       this.ship = new _nave2.default();
       this.ship.shipConstruction(this, Phaser);
       //console.log(this.ship.player, 'whats?')
 
       var player = this.ship.player;
+
+      //
+      // this.bullets = this.game.add.weapon(30, 'laser')
+      // this.bullets.bulletSpeed = 600;
+      // this.bullets.trackSprite(player, 0, 0, true)
+      // this.bullets.fireRate = 1000;
+      this.bullets = this.game.add.group();
+      this.bullets.enableBody = true;
+      this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+      this.bullets.createMultiple(3000, 'laser');
+      this.bullets.setAll('anchor.x', 0.1);
+      this.bullets.setAll('anchor.y', 0.1);
+      this.bullets.setAll('outOfBoundsKill', true);
+      this.bullets.setAll('checkWorldBounds', true);
 
       this.drones = new _drones2.default();
       this.drones.createDrone(this, this.ship.player, Phaser);
@@ -560,31 +807,37 @@ var KGalaxy = function () {
       var style = {
         font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
         marginRight: 'auto',
-        display: 'block'
+        display: 'block',
+        textShadow: "2px 2px #ff0000"
       };
 
       this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
+      this.text.fontWeight = 'bold';
+      this.text.setShadow(2, 2, 'rgba(5, 5, 5, 0.9)', 10);
 
       this.cursors = this.game.input.keyboard.createCursorKeys();
+      this.shooter = false;
+
+      this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+      this.key1.onDown.add(this.eventsOnClick.click, this);
 
       //  Notice that the sprite doesn't have any momentum at all,
       //  it's all just set by the camera follow type.
       //  0.1 is the amount of linear interpolation to use.
       //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
       this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
-      //this.game.moveAndStop = this.game.plugins.add(MoveAndStopPlugin);
       this.x;
       this.y;
       this.angle;
+
+      //this.game.physics.p2.enable([ this.portal1 ], true);
     }
   }, {
     key: 'update',
     value: function update() {
 
-      //this.player.body.setZeroVelocity();
       this.player = this.ship.player;
       if (this.game.input.activePointer.isDown) {
-        //this.player.body.moveRight(180);
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
 
@@ -593,35 +846,13 @@ var KGalaxy = function () {
         this.x = this.game.input.activePointer.worldX;
         this.y = this.game.input.activePointer.worldY;
 
-        this.ship.playerMove(this.drones);
         this.angle = this.game.physics.arcade.angleToPointer(this.player);
-        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 180, null);
+        this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 580, null);
+        this.ship.playerMove(this.angle);
         this.drones.moveDrones(this.angle);
-        //console.log(this.game.physics.arcade.distanceToXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY))
-        /*this.game.moveAndStop.toXY(this.player, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 180, 1000, {
-          onPositionReached: () => {
-            console.log('......')
-            //this.game.moveAndStop.stop(this.player)
-            //this.drones.stop()
-          },
-          onStopped: () => {
-            this.player.body.velocity.setTo(0, 0)
-            console.log('ah')
-          }
-        })*/
-        //this.game.physics.arcade.moveToObject(this.rank, this.player, 280)
-        //this.game.moveAndStop.toXY(this.rank, Math.floor(this.game.input.activePointer.worldX / 7 - 63), Math.floor(this.game.input.activePointer.worldY / 1.3), 180, null)
-        //console.log(this.game.physics.arcade, '-------', this.game.physics.arcade, this.game.input.activePointer.worldX)
-        //console.log(game.physics.arcade)
-        //console.log(this.game.world, this.game.world.position, this.game.input.mousePointer.x, this.game.input.mousePointer.y,'----', this.player.position.x, this.player.position.y, this.game.input.activePointer.leftButton.isDown, this.game.input.activePointer.rightButton.isDown, this.game.input.activePointer)
-        //console.log(player.rotation)
-        //player.body.moveUp(180)
-        //game.physics.arcade.moveToPointer(player, 100);
       } else {
-        //this.drones.stop()
         var active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y));
-        console.log(Math.floor(active));
-        if (Math.round(active) >= -1 && Math.round(active) <= 1) {
+        if (Math.round(active) >= 1 && Math.round(active) <= 6) {
           this.player.body.velocity.setTo(0, 0);
         }
 
@@ -631,22 +862,11 @@ var KGalaxy = function () {
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
       }
-
-      if (this.cursors.up.isDown) {
-        this.player.body.moveUp(180);
-        /*console.log(game.camera.y, 'y')
-        console.log(game.physics.arcade, 'yyyy')*/
-      } else if (this.cursors.down.isDown) {
-        this.player.body.moveDown(180);
-        console.log(game.camera.y, 'y');
-      }
-
-      if (this.cursors.left.isDown) {
-        this.player.body.velocity.x = -180;
-        console.log(game.camera.x, 'x');
-      } else if (this.cursors.right.isDown) {
-        console.log(game.camera.x, 'x');
-        this.player.body.moveRight(180);
+      if (this.shooter && this.enemy) {
+        this.eventsOnClick.shoot.call(this);
+        this.game.physics.arcade.overlap(this.bullets, this.enemy, function (a, b) {
+          b.kill();
+        }, null, this);
       }
     }
   }, {
@@ -670,7 +890,7 @@ var Game = new Phaser.Game(document.body.clientWidth, 800, Phaser.CANVAS, 'canva
 
 Kg.init(Game);
 
-},{"./drones":1,"./nave":3,"phaser-ce/build/custom/p2":5,"phaser-ce/build/custom/phaser-split":6,"phaser-ce/build/custom/pixi":7,"phaser-move-and-stop-plugin":9}],3:[function(require,module,exports){
+},{"./aliens":1,"./drones":2,"./eventsOnClick":3,"./nave":5,"phaser-ce/build/custom/p2":7,"phaser-ce/build/custom/phaser-split":8,"phaser-ce/build/custom/pixi":9,"phaser-move-and-stop-plugin":11}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -700,39 +920,43 @@ var Nave = function () {
     }
   }, {
     key: 'playerMove',
-    value: function playerMove(drones) {
+    value: function playerMove(angle) {
       switch (true) {
-        case this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9:
+        case angle < -1 && angle > -1.9:
           // Arriba
           this.player.loadTexture('player2', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2:
+        case angle > 1 && angle < 2:
           // Abajo
           this.player.loadTexture('player3', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4:
+        case angle < -3 && angle > -4:
           // Izquierda
           this.player.loadTexture('player4', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3:
+        case angle > 2 && angle < 3:
           // Izquierda Abajo
           this.player.loadTexture('player5', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+        case angle > 0 && angle < 1:
           // Derecha Abajo
           this.player.loadTexture('player6', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1:
+        case angle < -0.5 && angle > -1:
           // Derecha arriba
           this.player.loadTexture('player7', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3:
+        case angle < -2 && angle > -3:
           // Izquierda Arriba
           this.player.loadTexture('player8', 100, false);
           break;
-        case this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+        case angle > -0.5 && angle < 1:
           // Derecha
           this.player.loadTexture('player', 0, false);
+          break;
+        case angle == NaN:
+          // Derecha
+          this.player.loadTexture('player4', 0, false);
           break;
         default:
           // Izquierda
@@ -744,6 +968,12 @@ var Nave = function () {
     value: function player() {
       return this.player;
     }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      console.log('ya');
+      this.player.body.velocity.setTo(0, 0);
+    }
   }]);
 
   return Nave;
@@ -751,7 +981,7 @@ var Nave = function () {
 
 exports.default = Nave;
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -905,7 +1135,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (global){
 /**
  * The MIT License (MIT)
@@ -15736,7 +15966,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (process){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
@@ -106104,7 +106334,7 @@ PIXI.canUseNewCanvasBlendModes = function ()
 */
 
 }).call(this,require('_process'))
-},{"_process":12}],7:[function(require,module,exports){
+},{"_process":14}],9:[function(require,module,exports){
 /**
 * @author       Richard Davey <rich@photonstorm.com>
 * @copyright    2016 Photon Storm Ltd.
@@ -113904,7 +114134,7 @@ PIXI.TextureUvs = function ()
 
     return PIXI;
 }).call(this);
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -114084,7 +114314,7 @@ function stopToMove(objectsToMove, displayObject) {
 		}
 	}
 }
-},{"debug":10}],9:[function(require,module,exports){
+},{"debug":12}],11:[function(require,module,exports){
 'use strict';
 window.PIXI = require('phaser-ce/build/custom/pixi');
 window.p2 = require('phaser-ce/build/custom/p2');
@@ -114131,7 +114361,7 @@ MoveAndStop.prototype.isItemMoving = function (displayObject) {
 };
 
 exports.default = MoveAndStop;
-},{"./move-and-stop-core":8,"phaser-ce/build/custom/p2":5,"phaser-ce/build/custom/phaser-split":6,"phaser-ce/build/custom/pixi":7}],10:[function(require,module,exports){
+},{"./move-and-stop-core":10,"phaser-ce/build/custom/p2":7,"phaser-ce/build/custom/phaser-split":8,"phaser-ce/build/custom/pixi":9}],12:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -114330,7 +114560,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":11,"_process":12}],11:[function(require,module,exports){
+},{"./debug":13,"_process":14}],13:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -114557,7 +114787,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":4}],12:[function(require,module,exports){
+},{"ms":6}],14:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -114743,4 +114973,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[2]);
+},{}]},{},[4]);

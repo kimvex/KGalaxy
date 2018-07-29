@@ -10,39 +10,43 @@ class Nave {
     this.player.body.fixedRotation = true;
   }
 
-  playerMove(drones) {
+  playerMove(angle) {
     switch (true) {
-      case this.game.physics.arcade.angleToPointer(this.player) < -1 && this.game.physics.arcade.angleToPointer(this.player) > -1.9:
+      case angle < -1 && angle > -1.9:
       // Arriba
         this.player.loadTexture('player2', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) > 1 && this.game.physics.arcade.angleToPointer(this.player) < 2:
+      case angle > 1 && angle < 2:
       // Abajo
         this.player.loadTexture('player3', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) < -3 && this.game.physics.arcade.angleToPointer(this.player) > -4:
+      case angle < -3 && angle > -4:
       // Izquierda
         this.player.loadTexture('player4', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) > 2 && this.game.physics.arcade.angleToPointer(this.player) < 3:
+      case angle > 2 && angle < 3:
       // Izquierda Abajo
         this.player.loadTexture('player5', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) > 0 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+      case angle > 0 && angle < 1:
       // Derecha Abajo
         this.player.loadTexture('player6', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) < -0.5 && this.game.physics.arcade.angleToPointer(this.player) > -1:
+      case angle < -0.5 && angle > -1:
       // Derecha arriba
         this.player.loadTexture('player7', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) < -2 && this.game.physics.arcade.angleToPointer(this.player) > -3:
+      case angle < -2 && angle > -3:
       // Izquierda Arriba
         this.player.loadTexture('player8', 100, false);
         break;
-      case this.game.physics.arcade.angleToPointer(this.player) > -0.5 && this.game.physics.arcade.angleToPointer(this.player) < 1:
+      case angle > -0.5 && angle < 1:
         // Derecha
         this.player.loadTexture('player', 0, false);
+        break;
+      case angle == NaN:
+        // Derecha
+        this.player.loadTexture('player4', 0, false);
         break;
       default:
         // Izquierda
@@ -52,6 +56,11 @@ class Nave {
 
   player() {
     return this.player
+  }
+
+  stop() {
+    console.log('ya')
+    this.player.body.velocity.setTo(0, 0);
   }
 }
 
