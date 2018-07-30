@@ -13,7 +13,6 @@ class EventsOnClick {
   
   shoot() {
     if (this.game.time.now > this.firingTimer) {
-      console.log(this, '---|')
       this.fire = this.player.bullets.getFirstExists(false)
       
       //console.log(this.fire, 'fire', this.enemy.vida)
@@ -46,8 +45,6 @@ class EventsOnClick {
       this.selectable.destroy()
     }
     this.selectable = this.game.add.sprite(this.enemy.world.x - 70, this.enemy.world.y - 70, 'selectable');
-    //this.selectable.x = this.enemy.world.x - 70
-    //this.selectable.y = this.enemy.world.y - 70
     this.game.physics.enable(this.selectable, Phaser.Physics.ARCADE);
     this.selectable.scale.setTo(.2, .2);
     this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable)
