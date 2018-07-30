@@ -41,9 +41,11 @@ class KGalaxy {
   }
 
   create() {
+    this.player = {}
     this.portals = [this.portal1, this.portal2]
-    this.enemies = 20
+    this.enemies = 8
     this.firingTimer = 0
+    this.movingTimerAliens = 0
 
     this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
     
@@ -71,10 +73,12 @@ class KGalaxy {
     
     this.enemys = new Aliens()
     this.enemys.init(this, Phaser)
-
+    this.listEnemies = []
+    
     for (let i = 0; i <= this.enemies; i++) {
-      console.log('?')
-      this.enemys.createAlien.call(this, `a${i}`, Phaser)
+      let alien = this.enemys.createAlien.call(this, `a${i}`, Phaser, (i) => {
+        this.listEnemies.push(i)
+      })
     }
 
 
@@ -103,37 +107,32 @@ class KGalaxy {
     this.ship.shipConstruction(this, Phaser)
     //console.log(this.ship.player, 'whats?')
 
-    const player = this.ship.player
+    this.player = this.ship.player
 
     //
-    // this.bullets = this.game.add.weapon(30, 'laser')
+    // this.ship.player.bullets = this.game.add.weapon(30, 'laser')
     // this.bullets.bulletSpeed = 600;
     // this.bullets.trackSprite(player, 0, 0, true)
     // this.bullets.fireRate = 1000;
-    this.bullets = this.game.add.group();
-    this.bullets.enableBody = true;
-    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bullets.createMultiple(3000, 'laser');
-    this.bullets.setAll('anchor.x', 0.1);
-    this.bullets.setAll('anchor.y', 0.1);
-    this.bullets.setAll('outOfBoundsKill', true);
-    this.bullets.setAll('checkWorldBounds', true);
+    console.log(this.player, '----')
+    this.eventsOnClick.fire.call(this)
+    console.log(this.player, '----.io')
 
     this.drones = new Drones()
-    this.drones.createDrone(this, this.ship.player, Phaser)
+    this.drones.createDrone(this, this.player, Phaser)
 
-    this.rank = this.game.add.sprite(Math.floor(player.x + player.width / 7 - 63), Math.floor(player.y + player.height / 1.3), 'rank');
+    this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
     this.rank.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.rank, Phaser.Physics.ARCADE)
 
     const style = {
-      font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
+      font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
       marginRight: 'auto',
       display: 'block',
       textShadow: "2px 2px #ff0000"
     };
 
-    this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
+    this.text = this.game.add.text(Math.floor(this.player.x + this.player.width / 7 - 50), Math.floor(this.player.y + this.player.height / 1.5), "- Buraky -", style);
     this.text.fontWeight = 'bold';
     this.text.setShadow(2, 2, 'rgba(5, 5, 5, 0.9)', 10);
 
@@ -147,7 +146,7 @@ class KGalaxy {
     //  it's all just set by the camera follow type.
     //  0.1 is the amount of linear interpolation to use.
     //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
-    this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
+    this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
     this.x
     this.y
     this.angle
@@ -158,6 +157,7 @@ class KGalaxy {
   update() {
     
     this.player = this.ship.player
+    //console.log(this.player.world.x, this.player.world.y, 'position')
     if (this.game.input.activePointer.isDown) {
       this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
       this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
@@ -185,10 +185,19 @@ class KGalaxy {
     }
     if (this.shooter && this.enemy) {
       this.eventsOnClick.shoot.call(this)
-      this.game.physics.arcade.overlap(this.bullets, this.enemy, (a, b) => {
+      this.game.physics.arcade.overlap(this.player.bullets, this.enemy, (a, b) => {
         b.kill()
       }, null, this);
     }
+
+    if (this.selectable && this.enemy) {
+      //console.log('siguiendo')
+      this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable)
+    }
+
+    this.listEnemies.map(x => {
+      this.enemys.changeRouteAliens.call(this, x)
+    })
   }
 
   render() {
