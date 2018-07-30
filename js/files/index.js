@@ -157,7 +157,7 @@ class KGalaxy {
   update() {
     
     this.player = this.ship.player
-    console.log(this.player.world.x, this.player.world.y, 'position')
+    //console.log(this.player.world.x, this.player.world.y, 'position')
     if (this.game.input.activePointer.isDown) {
       this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
       this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
@@ -191,7 +191,7 @@ class KGalaxy {
     }
 
     if (this.selectable && this.enemy) {
-      console.log('siguiendo')
+      //console.log('siguiendo')
       this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable)
     }
 

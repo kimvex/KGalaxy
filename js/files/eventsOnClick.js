@@ -21,7 +21,11 @@ class EventsOnClick {
         const name = this.enemy.name
         this.enemy.kill()
         this.enemy.nameP.destroy()
-        this.enemys.createAlien.call(this, name, Phaser, (i) => { console.log(i) })
+        this.enemys.createAlien.call(this, name, Phaser, (i) => { 
+          /*const index = this.listEnemies.indexOf(i)
+          console.log('listEnemies', i, this.listEnemies, true)
+          this.listEnemies[index] = i*/
+         }, true)
         this.selectable.destroy()
         this.player.bullets.destroy()
         this.shooter = false
@@ -36,7 +40,6 @@ class EventsOnClick {
   }
   
   selectEnemy(enemy) {
-
     this.ship.stop.call(this)
     this.enemy = enemy
     if (this.selectable) {

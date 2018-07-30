@@ -22,7 +22,9 @@ var Aliens = function () {
     }
   }, {
     key: "createAlien",
-    value: function createAlien(i, Phaser, cb) {
+    value: function createAlien(i, Phaser, cb, n) {
+      var _this = this;
+
       console.log(cb);
       var x = Math.floor(Math.random() * (4801 - 1775) + 1775);
       var y = Math.floor(Math.random() * (4786 - 2920) + 2920);
@@ -48,24 +50,30 @@ var Aliens = function () {
       this.game.physics.enable(i.nameP, Phaser.Physics.ARCADE);
       this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
       this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
-      var active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY);
 
-      if (Math.round(active) >= 1 && Math.round(active) <= 6) {
-        console.log('????');
-        i.body.velocity.setTo(0, 0);
-        infer(i, this.distanceX, this.distanceY, 280, null);
+      if (n) {
+        var index = this.listEnemies.map(function (ene, index) {
+          if (ene.name === i.name) {
+            _this.listEnemies[index] = i;
+          }
+          console.log('listEnemies', _this.listEnemies[index], i, '---', index, '---');
+        });
       }
-
       return cb(i);
     }
   }, {
     key: "changeRouteAliens",
     value: function changeRouteAliens(i) {
+      console.log();
+      if (i.name == 'a8') {
+        //console.log(i.name, i.x, i.y)
+        console.log('En x: ', Math.floor(i.x) >= 4800, Math.floor(i.x) <= 1380, Math.floor(i.x));
+        console.log('En y: ', Math.floor(i.y) <= 3050, Math.floor(i.y) >= 4700, Math.floor(i.y));
+      }
       //const active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY)
       this.distanceX = Math.floor(Math.random() * (4801 - 1775) + 1775);
       this.distanceY = Math.floor(Math.random() * (4786 - 2920) + 2920);
-      //console.log(i.x, i.y, 'x-y')
-      if (i.x >= 4800 || i.y <= 1380 || i.y <= 3050 || i.y >= 4700) {
+      if (Math.floor(i.x) >= 4800 || Math.floor(i.x) <= 1380 || Math.floor(i.y) <= 3050 || Math.floor(i.y) >= 4700) {
         console.log('where?');
         i.body.velocity.setTo(0, 0);
         this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
@@ -640,8 +648,10 @@ var EventsOnClick = function () {
           this.enemy.kill();
           this.enemy.nameP.destroy();
           this.enemys.createAlien.call(this, name, Phaser, function (i) {
-            console.log(i);
-          });
+            /*const index = this.listEnemies.indexOf(i)
+            console.log('listEnemies', i, this.listEnemies, true)
+            this.listEnemies[index] = i*/
+          }, true);
           this.selectable.destroy();
           this.player.bullets.destroy();
           this.shooter = false;
@@ -657,7 +667,6 @@ var EventsOnClick = function () {
   }, {
     key: 'selectEnemy',
     value: function selectEnemy(enemy) {
-
       this.ship.stop.call(this);
       this.enemy = enemy;
       if (this.selectable) {
@@ -886,7 +895,7 @@ var KGalaxy = function () {
       var _this2 = this;
 
       this.player = this.ship.player;
-      console.log(this.player.world.x, this.player.world.y, 'position');
+      //console.log(this.player.world.x, this.player.world.y, 'position')
       if (this.game.input.activePointer.isDown) {
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
@@ -920,7 +929,7 @@ var KGalaxy = function () {
       }
 
       if (this.selectable && this.enemy) {
-        console.log('siguiendo');
+        //console.log('siguiendo')
         this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable);
       }
 

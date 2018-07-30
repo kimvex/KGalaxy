@@ -4,7 +4,7 @@ class Aliens {
     this.Phaser = Phaser
   }
 
-  createAlien(i, Phaser, cb) {
+  createAlien(i, Phaser, cb, n) {
     console.log(cb)
     const x = Math.floor(Math.random() * (4801 - 1775) + 1775)
     const y = Math.floor(Math.random() * (4786 - 2920) + 2920)
@@ -30,23 +30,29 @@ class Aliens {
     this.game.physics.enable(i.nameP, Phaser.Physics.ARCADE);
     this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
     this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
-    const active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY)
 
-    if (Math.round(active) >= 1 && Math.round(active) <= 6) {
-      console.log('????')
-      i.body.velocity.setTo(0, 0)
-      infer(i, this.distanceX, this.distanceY, 280, null);
+    if (n) {
+      const index = this.listEnemies.map((ene, index)=> {
+        if (ene.name === i.name) {
+          this.listEnemies[index] = i
+        }
+        console.log('listEnemies', this.listEnemies[index], i, '---', index, '---')
+      })
     }
-
     return cb(i)
   }
 
   changeRouteAliens(i) {
+    console.log()
+    if (i.name == 'a8') {
+      //console.log(i.name, i.x, i.y)
+      console.log('En x: ', Math.floor(i.x) >= 4800, Math.floor(i.x) <= 1380,Math.floor(i.x))
+      console.log('En y: ', Math.floor(i.y) <= 3050, Math.floor(i.y) >= 4700,Math.floor(i.y))
+    }
     //const active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY)
     this.distanceX = Math.floor(Math.random() * (4801 - 1775) + 1775)
     this.distanceY = Math.floor(Math.random() * (4786 - 2920) + 2920)
-    //console.log(i.x, i.y, 'x-y')
-    if ((i.x >= 4800 || i.y <= 1380) || (i.y <= 3050 || i.y >= 4700)){
+    if ((Math.floor(i.x) >= 4800 || Math.floor(i.x) <= 1380) || (Math.floor(i.y) <= 3050 || Math.floor(i.y) >= 4700)){
       console.log('where?')
       i.body.velocity.setTo(0, 0)
       this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
