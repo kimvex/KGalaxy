@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -15,19 +15,20 @@ var Aliens = function () {
   }
 
   _createClass(Aliens, [{
-    key: 'init',
+    key: "init",
     value: function init(config, Phaser) {
       this.game = config.game;
       this.Phaser = Phaser;
     }
   }, {
-    key: 'createAlien',
-    value: function createAlien(i, Phaser) {
-      console.log('yy', i);
+    key: "createAlien",
+    value: function createAlien(i, Phaser, cb) {
+      console.log(cb);
       var x = Math.floor(Math.random() * (4801 - 1775) + 1775);
       var y = Math.floor(Math.random() * (4786 - 2920) + 2920);
+      this.distanceX = Math.floor(Math.random() * (4801 - 1775) + 1775);
+      this.distanceY = Math.floor(Math.random() * (4786 - 2920) + 2920);
 
-      console.log(x, y);
       var name = i;
       i = this.game.add.sprite(x, y, 'alien');
       var style = {
@@ -44,7 +45,34 @@ var Aliens = function () {
       i.inputEnabled = true;
       i.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, i), this);
       i.nameP = this.game.add.text(x, y, name, style);
-      //events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, e), this)
+      this.game.physics.enable(i.nameP, Phaser.Physics.ARCADE);
+      this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
+      this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
+      var active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY);
+
+      if (Math.round(active) >= 1 && Math.round(active) <= 6) {
+        console.log('????');
+        i.body.velocity.setTo(0, 0);
+        infer(i, this.distanceX, this.distanceY, 280, null);
+      }
+
+      return cb(i);
+    }
+  }, {
+    key: "changeRouteAliens",
+    value: function changeRouteAliens(i) {
+      //const active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY)
+      this.distanceX = Math.floor(Math.random() * (4801 - 1775) + 1775);
+      this.distanceY = Math.floor(Math.random() * (4786 - 2920) + 2920);
+      //console.log(i.x, i.y, 'x-y')
+      if (i.x >= 4800 || i.y <= 1380 || i.y <= 3050 || i.y >= 4700) {
+        console.log('where?');
+        i.body.velocity.setTo(0, 0);
+        this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
+        this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
+        //infer(i, distanceX, distanceY, 280, null);
+        //this.movingTimerAliens = this.game.time.now + 4000
+      }
     }
   }]);
 
@@ -595,6 +623,7 @@ var EventsOnClick = function () {
       if (this.shooter && this.enemy) {
         this.shooter = false;
       } else if (!this.shooter && this.enemy) {
+        this.eventsOnClick.fire.call(this);
         this.shooter = true;
       }
     }
@@ -602,23 +631,27 @@ var EventsOnClick = function () {
     key: 'shoot',
     value: function shoot() {
       if (this.game.time.now > this.firingTimer) {
-        this.fire = this.bullets.getFirstExists(false);
+        console.log(this, '---|');
+        this.fire = this.player.bullets.getFirstExists(false);
 
-        this.fire.reset(this.player.body.x, this.player.body.y);
-        if (this.enemy.vida <= 0) {
+        //console.log(this.fire, 'fire', this.enemy.vida)
+        if (this.enemy.vida <= 1) {
           var name = this.enemy.name;
           this.enemy.kill();
           this.enemy.nameP.destroy();
+          this.enemys.createAlien.call(this, name, Phaser, function (i) {
+            console.log(i);
+          });
+          this.selectable.destroy();
+          this.player.bullets.destroy();
           this.shooter = false;
           this.enemy = undefined;
-          this.fire.kill();
-          this.enemys.createAlien.call(this, name, Phaser);
-          this.selectable.destroy();
           return;
         }
-        this.game.physics.arcade.moveToObject(this.fire, this.enemy, 320);
-        this.firingTimer = this.game.time.now + 500;
-        this.enemy.vida = this.enemy.vida - 10;
+        this.fire.reset(this.player.body.x, this.player.body.y);
+        this.game.physics.arcade.moveToObject(this.fire, this.enemy, 1020);
+        this.firingTimer = this.game.time.now + 300;
+        this.enemy.vida = this.enemy.vida - 100;
       }
     }
   }, {
@@ -630,14 +663,30 @@ var EventsOnClick = function () {
       if (this.selectable) {
         this.selectable.destroy();
       }
-      this.selectable = this.game.add.sprite(-10, 0, 'selectable');
+      this.selectable = this.game.add.sprite(this.enemy.world.x - 70, this.enemy.world.y - 70, 'selectable');
+      //this.selectable.x = this.enemy.world.x - 70
+      //this.selectable.y = this.enemy.world.y - 70
+      this.game.physics.enable(this.selectable, Phaser.Physics.ARCADE);
       this.selectable.scale.setTo(.2, .2);
-      this.selectable.x = this.enemy.world.x - 70;
-      this.selectable.y = this.enemy.world.y - 70;
+      this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable);
     }
   }, {
     key: 'fire',
-    value: function fire(bullet, alien) {}
+    value: function fire() {
+      this.player.bullets = this.game.add.group();
+      this.player.bullets.enableBody = true;
+      this.player.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+      this.player.bullets.createMultiple(3000, 'laser');
+      this.player.bullets.setAll('anchor.x', 0.1);
+      this.player.bullets.setAll('anchor.y', 0.1);
+      this.player.bullets.setAll('outOfBoundsKill', true);
+      this.player.bullets.setAll('checkWorldBounds', true);
+    }
+  }, {
+    key: 'followSelection',
+    value: function followSelection(enemy, selectable) {
+      this.game.physics.arcade.moveToXY(selectable, enemy.x - 70, enemy.y - 70, 80);
+    }
   }]);
 
   return EventsOnClick;
@@ -721,9 +770,11 @@ var KGalaxy = function () {
     value: function create() {
       var _this = this;
 
+      this.player = {};
       this.portals = [this.portal1, this.portal2];
-      this.enemies = 20;
+      this.enemies = 8;
       this.firingTimer = 0;
+      this.movingTimerAliens = 0;
 
       this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
 
@@ -751,10 +802,12 @@ var KGalaxy = function () {
 
       this.enemys = new _aliens2.default();
       this.enemys.init(this, Phaser);
+      this.listEnemies = [];
 
       for (var i = 0; i <= this.enemies; i++) {
-        console.log('?');
-        this.enemys.createAlien.call(this, 'a' + i, Phaser);
+        var alien = this.enemys.createAlien.call(this, 'a' + i, Phaser, function (i) {
+          _this.listEnemies.push(i);
+        });
       }
 
       //this.game.physics.p2.enable([ this.portal1 ], true);
@@ -781,37 +834,32 @@ var KGalaxy = function () {
       this.ship.shipConstruction(this, Phaser);
       //console.log(this.ship.player, 'whats?')
 
-      var player = this.ship.player;
+      this.player = this.ship.player;
 
       //
-      // this.bullets = this.game.add.weapon(30, 'laser')
+      // this.ship.player.bullets = this.game.add.weapon(30, 'laser')
       // this.bullets.bulletSpeed = 600;
       // this.bullets.trackSprite(player, 0, 0, true)
       // this.bullets.fireRate = 1000;
-      this.bullets = this.game.add.group();
-      this.bullets.enableBody = true;
-      this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-      this.bullets.createMultiple(3000, 'laser');
-      this.bullets.setAll('anchor.x', 0.1);
-      this.bullets.setAll('anchor.y', 0.1);
-      this.bullets.setAll('outOfBoundsKill', true);
-      this.bullets.setAll('checkWorldBounds', true);
+      console.log(this.player, '----');
+      this.eventsOnClick.fire.call(this);
+      console.log(this.player, '----.io');
 
       this.drones = new _drones2.default();
-      this.drones.createDrone(this, this.ship.player, Phaser);
+      this.drones.createDrone(this, this.player, Phaser);
 
-      this.rank = this.game.add.sprite(Math.floor(player.x + player.width / 7 - 63), Math.floor(player.y + player.height / 1.3), 'rank');
+      this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
       this.rank.anchor.setTo(0.5, 0.5);
       this.game.physics.enable(this.rank, Phaser.Physics.ARCADE);
 
       var style = {
-        font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: player.width, align: "center", marginLeft: 'auto',
+        font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
         marginRight: 'auto',
         display: 'block',
         textShadow: "2px 2px #ff0000"
       };
 
-      this.text = this.game.add.text(Math.floor(player.x + player.width / 7 - 50), Math.floor(player.y + player.height / 1.5), "- Buraky -", style);
+      this.text = this.game.add.text(Math.floor(this.player.x + this.player.width / 7 - 50), Math.floor(this.player.y + this.player.height / 1.5), "- Buraky -", style);
       this.text.fontWeight = 'bold';
       this.text.setShadow(2, 2, 'rgba(5, 5, 5, 0.9)', 10);
 
@@ -825,7 +873,7 @@ var KGalaxy = function () {
       //  it's all just set by the camera follow type.
       //  0.1 is the amount of linear interpolation to use.
       //  The smaller the value, the smooth the camera (and the longer it takes to catch up)
-      this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
+      this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
       this.x;
       this.y;
       this.angle;
@@ -835,8 +883,10 @@ var KGalaxy = function () {
   }, {
     key: 'update',
     value: function update() {
+      var _this2 = this;
 
       this.player = this.ship.player;
+      console.log(this.player.world.x, this.player.world.y, 'position');
       if (this.game.input.activePointer.isDown) {
         this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
         this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
@@ -864,10 +914,19 @@ var KGalaxy = function () {
       }
       if (this.shooter && this.enemy) {
         this.eventsOnClick.shoot.call(this);
-        this.game.physics.arcade.overlap(this.bullets, this.enemy, function (a, b) {
+        this.game.physics.arcade.overlap(this.player.bullets, this.enemy, function (a, b) {
           b.kill();
         }, null, this);
       }
+
+      if (this.selectable && this.enemy) {
+        console.log('siguiendo');
+        this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable);
+      }
+
+      this.listEnemies.map(function (x) {
+        _this2.enemys.changeRouteAliens.call(_this2, x);
+      });
     }
   }, {
     key: 'render',
