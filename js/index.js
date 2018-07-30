@@ -25,7 +25,6 @@ var Aliens = function () {
     value: function createAlien(i, Phaser, cb, n) {
       var _this = this;
 
-      console.log(cb);
       var x = Math.floor(Math.random() * (4801 - 1775) + 1775);
       var y = Math.floor(Math.random() * (4786 - 2920) + 2920);
       this.distanceX = Math.floor(Math.random() * (4801 - 1775) + 1775);
@@ -56,7 +55,6 @@ var Aliens = function () {
           if (ene.name === i.name) {
             _this.listEnemies[index] = i;
           }
-          console.log('listEnemies', _this.listEnemies[index], i, '---', index, '---');
         });
       }
       return cb(i);
@@ -64,22 +62,13 @@ var Aliens = function () {
   }, {
     key: "changeRouteAliens",
     value: function changeRouteAliens(i) {
-      console.log();
-      if (i.name == 'a8') {
-        //console.log(i.name, i.x, i.y)
-        console.log('En x: ', Math.floor(i.x) >= 4800, Math.floor(i.x) <= 1380, Math.floor(i.x));
-        console.log('En y: ', Math.floor(i.y) <= 3050, Math.floor(i.y) >= 4700, Math.floor(i.y));
-      }
       //const active = this.game.physics.arcade.distanceToXY(i, this.distanceX, this.distanceY)
       this.distanceX = Math.floor(Math.random() * (4801 - 1775) + 1775);
       this.distanceY = Math.floor(Math.random() * (4786 - 2920) + 2920);
       if (Math.floor(i.x) >= 4800 || Math.floor(i.x) <= 1380 || Math.floor(i.y) <= 3050 || Math.floor(i.y) >= 4700) {
-        console.log('where?');
         i.body.velocity.setTo(0, 0);
         this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
         this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
-        //infer(i, distanceX, distanceY, 280, null);
-        //this.movingTimerAliens = this.game.time.now + 4000
       }
     }
   }]);
@@ -639,7 +628,6 @@ var EventsOnClick = function () {
     key: 'shoot',
     value: function shoot() {
       if (this.game.time.now > this.firingTimer) {
-        console.log(this, '---|');
         this.fire = this.player.bullets.getFirstExists(false);
 
         //console.log(this.fire, 'fire', this.enemy.vida)
@@ -673,8 +661,6 @@ var EventsOnClick = function () {
         this.selectable.destroy();
       }
       this.selectable = this.game.add.sprite(this.enemy.world.x - 70, this.enemy.world.y - 70, 'selectable');
-      //this.selectable.x = this.enemy.world.x - 70
-      //this.selectable.y = this.enemy.world.y - 70
       this.game.physics.enable(this.selectable, Phaser.Physics.ARCADE);
       this.selectable.scale.setTo(.2, .2);
       this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable);
