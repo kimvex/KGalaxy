@@ -18,10 +18,20 @@ class Aliens {
         display: 'block'
       };
   
-    i.vida = 100
+    i.vida = 400000
+    i.damage = 3500
     i.name = name
     i.anchor.setTo(0.5, 0.5);
     i.smoothed = false;
+    i.munition = this.game.add.group();
+    i.munition.enableBody = true;
+    i.munition.physicsBodyType = Phaser.Physics.ARCADE;
+    i.munition.createMultiple(300, 'laserAlien');
+    i.munition.setAll('anchor.x', 0.1);
+    i.munition.setAll('anchor.y', 0.1);
+    i.munition.setAll('outOfBoundsKill', true);
+    i.munition.setAll('checkWorldBounds', true);
+
     this.game.physics.enable(i, Phaser.Physics.ARCADE);
     i.inputEnabled = true;
     i.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, i), this)
@@ -49,6 +59,10 @@ class Aliens {
       this.game.physics.arcade.moveToXY(i, this.distanceX, this.distanceY, 80, null);
       this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
     }
+  }
+
+  shoot(alien) {
+    
   }
 }
 
