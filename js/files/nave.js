@@ -5,6 +5,8 @@ class Nave {
     this.player = this.game.add.sprite(3763.9733077084065, 3712.077713020402, 'player');
     this.player.anchor.setTo(0.5, 0.5);
     this.player.smoothed = false;
+    this.player.damage = 8700
+    this.player.health = 256000
     this.game.physics.enable(this.player, this.Phaser.Physics.ARCADE);
 
     this.player.body.fixedRotation = true;

@@ -38,10 +38,20 @@ var Aliens = function () {
         display: 'block'
       };
 
-      i.vida = 100;
+      i.vida = 400000;
+      i.damage = 3500;
       i.name = name;
       i.anchor.setTo(0.5, 0.5);
       i.smoothed = false;
+      i.munition = this.game.add.group();
+      i.munition.enableBody = true;
+      i.munition.physicsBodyType = Phaser.Physics.ARCADE;
+      i.munition.createMultiple(300, 'laserAlien');
+      i.munition.setAll('anchor.x', 0.1);
+      i.munition.setAll('anchor.y', 0.1);
+      i.munition.setAll('outOfBoundsKill', true);
+      i.munition.setAll('checkWorldBounds', true);
+
       this.game.physics.enable(i, Phaser.Physics.ARCADE);
       i.inputEnabled = true;
       i.events.onInputDown.add(this.eventsOnClick.selectEnemy.bind(this, i), this);
@@ -71,6 +81,9 @@ var Aliens = function () {
         this.game.physics.arcade.moveToXY(i.nameP, this.distanceX, this.distanceY, 80, null);
       }
     }
+  }, {
+    key: "shoot",
+    value: function shoot(alien) {}
   }]);
 
   return Aliens;
@@ -629,27 +642,50 @@ var EventsOnClick = function () {
     value: function shoot() {
       if (this.game.time.now > this.firingTimer) {
         this.fire = this.player.bullets.getFirstExists(false);
+        this.fireEnemy = this.enemy.munition.getFirstExists(false);
 
-        //console.log(this.fire, 'fire', this.enemy.vida)
-        if (this.enemy.vida <= 1) {
-          var name = this.enemy.name;
-          this.enemy.kill();
-          this.enemy.nameP.destroy();
-          this.enemys.createAlien.call(this, name, Phaser, function (i) {
-            /*const index = this.listEnemies.indexOf(i)
-            console.log('listEnemies', i, this.listEnemies, true)
-            this.listEnemies[index] = i*/
-          }, true);
-          this.selectable.destroy();
-          this.player.bullets.destroy();
-          this.shooter = false;
-          this.enemy = undefined;
-          return;
+        console.log(this.fire, 'fire', this.enemy.vida);
+        try {
+          if (this.enemy.vida <= 1) {
+            console.log('porque?', this.enemy.vida);
+            var name = this.enemy.name;
+            this.enemy.kill();
+            this.enemy.nameP.destroy();
+            this.enemys.createAlien.call(this, name, Phaser, function (i) {
+              /*const index = this.listEnemies.indexOf(i)
+              console.log('listEnemies', i, this.listEnemies, true)
+              this.listEnemies[index] = i*/
+            }, true);
+            this.selectable.destroy();
+            this.player.bullets.destroy();
+            this.shooter = false;
+            this.enemy = undefined;
+            return;
+          } else {
+
+            if (this.player.health <= 1) {
+
+              this.player.kill();
+
+              this.selectable.destroy();
+              this.player.bullets.destroy();
+              this.enemy.munition.destroy();
+              this.shooter = false;
+              return;
+            }
+
+            this.fire.reset(this.player.body.x, this.player.body.y);
+            this.game.physics.arcade.moveToObject(this.fire, this.enemy, 1020);
+            this.firingTimer = this.game.time.now + 300;
+            this.enemy.vida = this.enemy.vida - this.player.damage;
+
+            this.fireEnemy.reset(this.enemy.body.x, this.enemy.body.y);
+            this.game.physics.arcade.moveToObject(this.fireEnemy, this.player, 600);
+            this.player.health = this.player.health - this.enemy.damage;
+          }
+        } catch (e) {
+          console.log(e);
         }
-        this.fire.reset(this.player.body.x, this.player.body.y);
-        this.game.physics.arcade.moveToObject(this.fire, this.enemy, 1020);
-        this.firingTimer = this.game.time.now + 300;
-        this.enemy.vida = this.enemy.vida - 100;
       }
     }
   }, {
@@ -671,7 +707,7 @@ var EventsOnClick = function () {
       this.player.bullets = this.game.add.group();
       this.player.bullets.enableBody = true;
       this.player.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-      this.player.bullets.createMultiple(3000, 'laser');
+      this.player.bullets.createMultiple(300, 'laser');
       this.player.bullets.setAll('anchor.x', 0.1);
       this.player.bullets.setAll('anchor.y', 0.1);
       this.player.bullets.setAll('outOfBoundsKill', true);
@@ -759,6 +795,7 @@ var KGalaxy = function () {
       this.game.load.image('laser', './assets/laser/2.png');
       this.game.load.spritesheet('alien', './assets/aliens/yhBb6B0.png');
       this.game.load.image('selectable', './assets/miselaneas/circle-png-7.png');
+      this.game.load.image('laserAlien', './assets/laser/x1.png');
     }
   }, {
     key: 'create',
@@ -769,6 +806,7 @@ var KGalaxy = function () {
       this.portals = [this.portal1, this.portal2];
       this.enemies = 8;
       this.firingTimer = 0;
+      this.firingTimerEnemy = 0;
       this.movingTimerAliens = 0;
 
       this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
@@ -912,9 +950,21 @@ var KGalaxy = function () {
         this.game.physics.arcade.overlap(this.player.bullets, this.enemy, function (a, b) {
           b.kill();
         }, null, this);
+
+        if (this.enemy !== undefined) {
+          var _enemy$vida = this.enemy.vida,
+              vida = _enemy$vida === undefined ? 0 : _enemy$vida;
+
+
+          if (vida >= 1 && this.player.health >= 1) {
+            this.game.physics.arcade.overlap(this.enemy.munition, this.player, function (a, b) {
+              b.kill();
+            }, null, this);
+          }
+        }
       }
 
-      if (this.selectable && this.enemy) {
+      if (this.selectable && this.enemy && this.player.health >= 1) {
         //console.log('siguiendo')
         this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable);
       }
@@ -968,6 +1018,8 @@ var Nave = function () {
       this.player = this.game.add.sprite(3763.9733077084065, 3712.077713020402, 'player');
       this.player.anchor.setTo(0.5, 0.5);
       this.player.smoothed = false;
+      this.player.damage = 8700;
+      this.player.health = 256000;
       this.game.physics.enable(this.player, this.Phaser.Physics.ARCADE);
 
       this.player.body.fixedRotation = true;

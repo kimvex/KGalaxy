@@ -38,6 +38,7 @@ class KGalaxy {
     this.game.load.image('laser', './assets/laser/2.png');
     this.game.load.spritesheet('alien', './assets/aliens/yhBb6B0.png');
     this.game.load.image('selectable', './assets/miselaneas/circle-png-7.png');
+    this.game.load.image('laserAlien', './assets/laser/x1.png');
   }
 
   create() {
@@ -45,6 +46,7 @@ class KGalaxy {
     this.portals = [this.portal1, this.portal2]
     this.enemies = 8
     this.firingTimer = 0
+    this.firingTimerEnemy = 0
     this.movingTimerAliens = 0
 
     this.game.add.tileSprite(1386, 2920, 3840, 2160, 'background');
@@ -188,9 +190,19 @@ class KGalaxy {
       this.game.physics.arcade.overlap(this.player.bullets, this.enemy, (a, b) => {
         b.kill()
       }, null, this);
+      
+      if (this.enemy !== undefined) {
+        const {enemy: { vida = 0 }} = this
+  
+        if (vida >= 1 && this.player.health >= 1) {
+          this.game.physics.arcade.overlap(this.enemy.munition, this.player, (a, b) => {
+            b.kill()
+          }, null, this);
+        }
+      }
     }
 
-    if (this.selectable && this.enemy) {
+    if (this.selectable && this.enemy && this.player.health >= 1) {
       //console.log('siguiendo')
       this.eventsOnClick.followSelection.call(this, this.enemy, this.selectable)
     }
