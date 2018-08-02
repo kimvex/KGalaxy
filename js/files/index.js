@@ -6,7 +6,7 @@ window.Phaser = require('phaser-ce/build/custom/phaser-split');
 
 import MoveAndStopPlugin from "phaser-move-and-stop-plugin";
 import Nave from './nave'
-import Drones from './drones'
+
 import EventsOnClick from "./eventsOnClick";
 import Aliens from './aliens'
 
@@ -120,24 +120,6 @@ class KGalaxy {
     this.eventsOnClick.fire.call(this)
     console.log(this.player, '----.io')
 
-    this.drones = new Drones()
-    this.drones.createDrone(this, this.player, Phaser)
-
-    this.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
-    this.rank.anchor.setTo(0.5, 0.5);
-    this.game.physics.enable(this.rank, Phaser.Physics.ARCADE)
-
-    const style = {
-      font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
-      marginRight: 'auto',
-      display: 'block',
-      textShadow: "2px 2px #ff0000"
-    };
-
-    this.text = this.game.add.text(Math.floor(this.player.x + this.player.width / 7 - 50), Math.floor(this.player.y + this.player.height / 1.5), "- Buraky -", style);
-    this.text.fontWeight = 'bold';
-    this.text.setShadow(2, 2, 'rgba(5, 5, 5, 0.9)', 10);
-
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.shooter = false
     
@@ -160,30 +142,33 @@ class KGalaxy {
     
     this.player = this.ship.player
     //console.log(this.player.world.x, this.player.world.y, 'position')
-    if (this.game.input.activePointer.isDown) {
-      this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
-      this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
+    if (this.game.input.activePointer.isDown && this.player.health >= 1 && this.player ) {
+      console.log('si')
+      this.player.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
+      this.player.text.y = Math.floor(this.player.y + this.player.height / 1.5);
 
-      this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
-      this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
+      this.player.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
+      this.player.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
       this.x = this.game.input.activePointer.worldX
       this.y = this.game.input.activePointer.worldY
       
       this.angle = this.game.physics.arcade.angleToPointer(this.player)
       this.game.physics.arcade.moveToXY(this.player, Math.floor(this.game.input.activePointer.worldX), Math.floor(this.game.input.activePointer.worldY), 580, null);
       this.ship.playerMove(this.angle)
-      this.drones.moveDrones(this.angle)
+      this.player.drones.moveDrones(this.angle)
     } else {
-      const active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y))
-      if (Math.round(active) >= 1 && Math.round(active) <= 6) {
-        this.player.body.velocity.setTo(0, 0)
+      if (this.player.health >= 1) {
+        const active = this.game.physics.arcade.distanceToXY(this.player, Math.floor(this.x), Math.floor(this.y))
+        if (Math.round(active) >= 1 && Math.round(active) <= 6) {
+          this.player.body.velocity.setTo(0, 0)
+        }
+  
+        this.player.drones.moveDrones(this.angle)
+        this.player.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
+        this.player.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
+        this.player.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
+        this.player.text.y = Math.floor(this.player.y + this.player.height / 1.5);
       }
-
-      this.drones.moveDrones(this.angle)
-      this.rank.x = Math.floor(this.player.x + this.player.width / 7 - 63);
-      this.rank.y = Math.floor(this.player.y + this.player.height / 1.3);
-      this.text.x = Math.floor(this.player.x + this.player.width / 7 - 50);
-      this.text.y = Math.floor(this.player.y + this.player.height / 1.5);
     }
     if (this.shooter && this.enemy) {
       this.eventsOnClick.shoot.call(this)

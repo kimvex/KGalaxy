@@ -15,8 +15,7 @@ class EventsOnClick {
     if (this.game.time.now > this.firingTimer) {
       this.fire = this.player.bullets.getFirstExists(false)
       this.fireEnemy = this.enemy.munition.getFirstExists(false)
-      
-      console.log(this.fire, 'fire', this.enemy.vida)
+
       try {
         if (this.enemy.vida <= 1) {
           console.log('porque?', this.enemy.vida)
@@ -36,8 +35,11 @@ class EventsOnClick {
         } else {
           
                 if (this.player.health <= 1) {
-           
-                  this.player.kill()
+                  console.log(this.player.drones, 'yeah')
+                  this.player.drones.drone().map(d => d.destroy())
+                  this.player.text.destroy()
+                  this.player.rank.destroy()
+                  this.player.destroy()
           
                   this.selectable.destroy()
                   this.player.bullets.destroy()

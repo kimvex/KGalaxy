@@ -1,3 +1,5 @@
+import Drones from './drones'
+
 class Nave {
   shipConstruction(config, Phaser) {
     this.game = config.game
@@ -8,6 +10,29 @@ class Nave {
     this.player.damage = 8700
     this.player.health = 256000
     this.game.physics.enable(this.player, this.Phaser.Physics.ARCADE);
+
+    // Drones
+    let drones = new Drones()
+    this.player.drones = drones
+    this.player.dronesArr = drones.createDrone(config, this.player, Phaser)
+    
+
+    // Rango
+    this.player.rank = this.game.add.sprite(Math.floor(this.player.x + this.player.width / 7 - 63), Math.floor(this.player.y + this.player.height / 1.3), 'rank');
+    this.player.rank.anchor.setTo(0.5, 0.5);
+    this.game.physics.enable(this.player.rank, Phaser.Physics.ARCADE)
+
+    // Nanme of user
+    const style = {
+      font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.player.width, align: "center", marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block',
+      textShadow: "2px 2px #ff0000"
+    };
+    
+    this.player.text = this.game.add.text(Math.floor(this.player.x + this.player.width / 7 - 50), Math.floor(this.player.y + this.player.height / 1.5), "- Buraky -", style);
+    this.player.text.fontWeight = 'bold';
+    this.player.text.setShadow(2, 2, 'rgba(5, 5, 5, 0.9)', 10);
 
     this.player.body.fixedRotation = true;
   }
